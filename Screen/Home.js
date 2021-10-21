@@ -1,18 +1,34 @@
-import { View, Image, Platform, Text, TouchableOpacity, ScrollView, Button, } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  View,
+  Image,
+  Platform,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Button,
+} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import axios from 'axios';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../style/homeStyle';
 
-function Home({ navigation }) {
+function Home({navigation}) {
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('');
   const [show, setShow] = useState(false);
-  const [textdate, setdate] = useState('Empty');
-  const [seat, setseat] = useState(0);
-
+  const [textdate, setdate] = useState('');
+  const [seat, setseat] = useState(1);
+  const [data_route, setdata_route] = useState([]);
+  const [point_up, setpoint_up] = useState([]);
+  const [point_down, setpoint_down] = useState([]);
+  const [point, setpoint] = useState('');
+  const point_up_Ref = useRef();
+  const point_down_Ref = useRef();
+  let routs = '';
+  let point_up_select = '';
+  let point_down_select = '';
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -27,7 +43,6 @@ function Home({ navigation }) {
       tempDate.getFullYear();
     setdate(fDate);
   };
-
   const showMode = currentMode => {
     setShow(true);
     setMode(currentMode);
@@ -38,19 +53,26 @@ function Home({ navigation }) {
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
     Alert.alert(date + '-' + month + '-' + year);
-  }
-
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [way, setWay] = useState([]);
-  const citiesDropdownRef = useRef();
-  const wayDropdownRef = useRef();
-  let routs = '';
-  let license_plate = '';
-  let point_way = '';
+  };
 
   useEffect(() => {
-    if (seat < 0) {
+    getdata();
+  }, []);
+  async function getdata() {
+    await axios
+      .get('http://10.0.2.2:3001/customer/destination')
+      .then(res => setpoint(res.data));
+  }
+
+  useEffect(() => {
+    if (point == '') {
+    } else {
+      setdata_route(point);
+    }
+  }, [point]);
+
+  useEffect(() => {
+    if (seat <= 0) {
       alert('กรุณาระบุจำนวนที่นั่ง');
       setseat(seat + 1);
     } else if (seat > 13) {
@@ -59,59 +81,41 @@ function Home({ navigation }) {
     }
   }, [seat]);
 
-  const [point, setpoint] = useState([])
-  let data2 = []
-  useEffect(() => {
-    getdata();
-  }, []);
-  async function getdata() {
-    await axios
-      .get('http://10.0.2.2:3001/destination2')
-      .then(res => (setpoint(res.data)));
-  }
-  useEffect(() => {
-    setTimeout(() => {
-      setCountries([
-        {
-          title: 'กรุงเทพ-บางแสน',
-          cities: point.pickup_bs,
-          way: point.down_bs,
-        },
-        {
-          title: 'กรุงเทพ-พัทยา',
-          cities: point.pickup_pt,
-          way: point.down_pt,
-        },
-      ]);
-    }, 1000);
-  }, [point]);
+  let data_onselect;
   function select() {
-    routs = routs.replace(/"/g, '');
-    license_plate = license_plate.replace(/"/g, '');
-    point_way = point_way.replace(/"/g, '');
-    alert('alert ' + routs + ' ' + license_plate + ' ' + point_way);
+    const data = [];
+    data.push({
+      routs: routs,
+      point_up_select: point_up_select,
+      point_down_select: point_down_select,
+      seat: seat,
+    });
+    if (routs == '' || point_up_select == '' || point_down_select == '') {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+    } else {
+    }
+    navigation.navigate('Viewroutebus', {item: data});
   }
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.goWhere}>ไปไหนดี ?</Text>
 
       <View style={styles.dropdownsRow}>
         <SelectDropdown
-          data={countries}
+          data={data_route}
           onSelect={(selectedItem, index) => {
-            citiesDropdownRef.current.reset();
-            wayDropdownRef.current.reset();
-            setCities([]);
-            setWay([]);
-            setCities(selectedItem.cities);
-            setWay(selectedItem.way);
+            point_up_Ref.current.reset();
+            point_down_Ref.current.reset();
+            setpoint_up([]);
+            setpoint_down([]);
+            setpoint_up(selectedItem.point_up);
+            setpoint_down(selectedItem.point_down);
           }}
-
           defaultButtonText={'เลือกสายรถ'}
           buttonTextAfterSelection={(selectedItem, index) => {
             //return data select
-            routs = JSON.stringify(selectedItem.title);
-            console.log('this is routs: ' + routs);
+            routs = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
@@ -122,27 +126,26 @@ function Home({ navigation }) {
           buttonTextStyle={styles.dropdown1BtnTxtStyle}
           renderDropdownIcon={() => {
             return (
-              <Image style={{ width: 15, height: 15 }}
+              <Image
+                style={{width: 15, height: 15}}
                 source={require('../images/down-arrow.png')}
               />
             );
           }}
-          dropdownIconPosition={"right"}
+          dropdownIconPosition={'right'}
           rowStyle={styles.dropdown1RowStyle}
           rowTextStyle={styles.dropdown1RowTxtStyle}
         />
       </View>
 
-
       <View style={styles.dropdownsRow}>
         <SelectDropdown
-          ref={citiesDropdownRef}
-          data={cities}
-          onSelect={(selectedItem, index) => { }}
-          defaultButtonText={'เลือกรถ'}
+          ref={point_up_Ref}
+          data={point_up}
+          onSelect={(selectedItem, index) => {}}
+          defaultButtonText={'เลือกจุดขึ้น'}
           buttonTextAfterSelection={(selectedItem, index) => {
-            license_plate = JSON.stringify(selectedItem.title);
-            console.log('this is license_plate: ' + license_plate);
+            point_up_select = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
@@ -152,12 +155,13 @@ function Home({ navigation }) {
           buttonTextStyle={styles.dropdown1BtnTxtStyle}
           renderDropdownIcon={() => {
             return (
-              <Image style={{ width: 15, height: 15 }}
+              <Image
+                style={{width: 15, height: 15}}
                 source={require('../images/down-arrow.png')}
               />
             );
           }}
-          dropdownIconPosition={"right"}
+          dropdownIconPosition={'right'}
           rowStyle={styles.dropdown1RowStyle}
           rowTextStyle={styles.dropdown1RowTxtStyle}
         />
@@ -165,13 +169,12 @@ function Home({ navigation }) {
 
       <View style={styles.dropdownsRow}>
         <SelectDropdown
-          ref={wayDropdownRef}
-          data={way}
-          onSelect={(selectedItem, index) => { }}
-          defaultButtonText={'เลือกจุด'}
+          ref={point_down_Ref}
+          data={point_down}
+          onSelect={(selectedItem, index) => {}}
+          defaultButtonText={'เลือกลง'}
           buttonTextAfterSelection={(selectedItem, index) => {
-            point_way = JSON.stringify(selectedItem.title);
-            console.log('this is point_way: ' + point_way);
+            point_down_select = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
@@ -181,23 +184,26 @@ function Home({ navigation }) {
           buttonTextStyle={styles.dropdown1BtnTxtStyle}
           renderDropdownIcon={() => {
             return (
-              <Image style={{ width: 15, height: 15 }}
+              <Image
+                style={{width: 15, height: 15}}
                 source={require('../images/down-arrow.png')}
               />
             );
           }}
-          dropdownIconPosition={"right"}
+          dropdownIconPosition={'right'}
           rowStyle={styles.dropdown1RowStyle}
           rowTextStyle={styles.dropdown1RowTxtStyle}
         />
       </View>
 
-      <View style={{ flexDirection: 'row', marginTop: 20 }}>
+      {/* <View style={{flexDirection: 'row', marginTop: 20}}>
         <Text style={styles.baseText}>วันที่</Text>
         <Text style={styles.boxInput}>{textdate}</Text>
         <TouchableOpacity onPress={() => showMode('date')}>
           <View style={styles.touch_able}>
-            <Text style={{ color: 'rgba(86, 96, 179, 1)', fontWeight: 'bold' }}>เลือกวันที่</Text>
+            <Text style={{color: 'rgba(86, 96, 179, 1)', fontWeight: 'bold'}}>
+              เลือกวันที่
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -211,9 +217,9 @@ function Home({ navigation }) {
           display="default"
           onChange={onChange}
         />
-      )}
+      )} */}
 
-      <View style={{ flexDirection: 'row', marginTop: 40 }}>
+      <View style={{flexDirection: 'row', marginTop: 40}}>
         <Text style={styles.baseText}>จำนวนที่นั่ง</Text>
         <TouchableOpacity
           style={styles.blockAddSeatPlus}
@@ -228,14 +234,15 @@ function Home({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Viewroutebus')}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate('Viewroutebus')}> */}
+      <TouchableOpacity onPress={() => select()}>
         <View style={styles.btnConfirm}>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, }}>ค้นหา</Text>
+          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+            ค้นหา
+          </Text>
         </View>
       </TouchableOpacity>
     </ScrollView>
-
-
   );
 }
 
