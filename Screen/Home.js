@@ -1,17 +1,7 @@
-import {
-  View,
-  Image,
-  Platform,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Button,
-} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {View,Image,Platform,Text,TouchableOpacity,ScrollView,} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import axios from 'axios';
 import React, {useState, useEffect, useRef} from 'react';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../style/homeStyle';
 
 function Home({navigation}) {
@@ -29,6 +19,7 @@ function Home({navigation}) {
   let routs = '';
   let point_up_select = '';
   let point_down_select = '';
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -58,6 +49,8 @@ function Home({navigation}) {
   useEffect(() => {
     getdata();
   }, []);
+
+  // getdata สายรถ
   async function getdata() {
     await axios
       .get('http://10.0.2.2:3001/customer/destination')
@@ -82,9 +75,10 @@ function Home({navigation}) {
   }, [seat]);
 
   let data_onselect;
+
   function select() {
     const data = [];
-    data.push({
+    data.push({  //ส่งข้อมูลที่เลือกไปหน้า Viewroutebus
       routs: routs,
       point_up_select: point_up_select,
       point_down_select: point_down_select,
@@ -96,11 +90,11 @@ function Home({navigation}) {
     }
     navigation.navigate('Viewroutebus', {item: data});
   }
-
+  
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.goWhere}>ไปไหนดี ?</Text>
-
+     
       <View style={styles.dropdownsRow}>
         <SelectDropdown
           data={data_route}
@@ -114,12 +108,12 @@ function Home({navigation}) {
           }}
           defaultButtonText={'เลือกสายรถ'}
           buttonTextAfterSelection={(selectedItem, index) => {
-            //return data select
+            //return selected data 
             routs = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
-            //show select data
+            //show selected data 
             return item.title;
           }}
           buttonStyle={styles.dropdown1BtnStyle}
@@ -172,7 +166,7 @@ function Home({navigation}) {
           ref={point_down_Ref}
           data={point_down}
           onSelect={(selectedItem, index) => {}}
-          defaultButtonText={'เลือกลง'}
+          defaultButtonText={'เลือกจุดลง'}
           buttonTextAfterSelection={(selectedItem, index) => {
             point_down_select = selectedItem.title;
             return selectedItem.title;
@@ -196,45 +190,21 @@ function Home({navigation}) {
         />
       </View>
 
-      {/* <View style={{flexDirection: 'row', marginTop: 20}}>
-        <Text style={styles.baseText}>วันที่</Text>
-        <Text style={styles.boxInput}>{textdate}</Text>
-        <TouchableOpacity onPress={() => showMode('date')}>
-          <View style={styles.touch_able}>
-            <Text style={{color: 'rgba(86, 96, 179, 1)', fontWeight: 'bold'}}>
-              เลือกวันที่
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )} */}
-
       <View style={{flexDirection: 'row', marginTop: 40}}>
         <Text style={styles.baseText}>จำนวนที่นั่ง</Text>
         <TouchableOpacity
           style={styles.blockAddSeatPlus}
           onPress={() => setseat(seat + 1)}>
-          <Text style={styles.baseText}> + </Text>
+          <Text style={styles.addSeatText}> + </Text>
         </TouchableOpacity>
         <Text style={styles.baseText}>{seat}</Text>
         <TouchableOpacity
           style={styles.blockAddSeatMinus}
           onPress={() => setseat(seat - 1)}>
-          <Text style={styles.baseText}> - </Text>
+          <Text style={styles.addSeatText}> - </Text>
         </TouchableOpacity>
       </View>
 
-      {/* <TouchableOpacity onPress={() => navigation.navigate('Viewroutebus')}> */}
       <TouchableOpacity onPress={() => select()}>
         <View style={styles.btnConfirm}>
           <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>

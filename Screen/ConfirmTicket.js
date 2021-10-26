@@ -1,55 +1,119 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {View,Text,StyleSheet,TouchableOpacity,Image,ScrollView,} from 'react-native';
 import axios from 'axios';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Card from './Card';
-import { getDrawerStatusFromState } from '@react-navigation/drawer';
-import styles from '../style/homeStyle';
 
+function ConfirmTicket({navigation, route}) {
+  const {item} = route.params;
+  // console.log(item);
 
-function ConfirmTicket({ navigation, route }) {
-    const { item } = route.params;
+  return (
+    <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
+      <Card>
+        <Text style={styles.textBold}>{item.item[0].vandata.time.substring(0, 5)}</Text>
 
-    return (
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <Card>
-                <Text>เวลา : {item.item.item.time}</Text>
-                <Text>{item.item.item.destination}</Text>
-                <Text>ทะเบียนรถ:{item.item.item.license}</Text>
-                <Text>ราคา:{item.item.item.price}</Text>
-            </Card>
+        <Text style={styles.textBold}>{item.item[0].vandata.name}</Text>
 
-            <Text>ช่องทางการโอนเงิน</Text>
+        <Text style={styles.textDefault}>จุดขึ้นรถ : {item.item[0].point_down_select} </Text>
 
-            <View style={{ flexDirection: 'row', marginTop: 10 }} >
-                <Image style={styles.bankImg} source={require('../images/bank1.png')} />
-                <Text>ธนาคารไทยพาณิชย์</Text>
-            </View>
-            <Text style={styles.bankNum}>123-459-789</Text>
+        <Text style={styles.textDefault}> จุดลงรถ : {item.item[0].point_up_select}</Text>
+        
+        <Text style={styles.textDefault}>จำนวน :{' '}<Text style={styles.textBold}>{item.item[0].seat_select} </Text>{' '}ที่นั่ง</Text>
+        
+        <Text style={styles.textDefault}>รวม : {item.item[0].vandata.price * item.item[0].seat_select} บาท</Text>
+      </Card>
 
-            <View style={{ flexDirection: 'row', marginTop: 10 }} >
-                <Image style={styles.bankImg} source={require('../images/bank2.png')} />
-                <Text>ธนาคารกรุงไทย</Text>
-            </View>
-            <Text style={styles.bankNum}>123-459-789</Text>
+      <View style={styles.payment}>
+        <Text style={styles.textPayment}>ช่องทางการโอนเงิน</Text>
 
-            <View style={{ flexDirection: 'row', marginTop: 10 }} >
-                <Image style={styles.bankImg} source={require('../images/bank3.png')} />
-                <Text>ธนาคารกรุงศรี</Text>
-            </View>
-            <Text style={styles.bankNum}>123-459-789</Text>
-
-
-
-
-            <TouchableOpacity onPress={() => navigation.navigate('Status', { item: { item } })}>
-                <View style={styles.btnConfirm}>
-                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, }}>ยืนยันการจอง</Text>
-                </View>
-            </TouchableOpacity>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Image
+            style={styles.bankImg}
+            source={require('../images/bank1.png')}
+          />
+          <View>
+            <Text style={styles.textDefault}>ธนาคารไทยพาณิชย์</Text>
+            <Text style={styles.textBold}>123-459-789</Text>
+          </View>
         </View>
-    );
+
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Image
+            style={styles.bankImg}
+            source={require('../images/bank2.png')}
+          />
+          <View>
+            <Text style={styles.textDefault}>ธนาคารกรุงไทย</Text>
+            <Text style={styles.textBold}>123-459-789</Text>
+          </View>
+        </View>
+
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Image
+            style={styles.bankImg}
+            source={require('../images/bank3.png')}
+          />
+          <View>
+            <Text style={styles.textDefault}>ธนาคารกรุงศรี</Text>
+            <Text style={styles.textBold}>123-459-789</Text>
+          </View>
+        </View>
+      </View>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('uploadSlip', {item: {item}})}>
+        <View style={styles.btnConfirm}>
+          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+            ถัดไป
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
+  );
 }
 
 export default ConfirmTicket;
 
+const styles = StyleSheet.create({
+  textBold: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  textDefault: {
+    color: '#5660B3',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  textPayment: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  btnConfirm: {
+    marginTop: 50,
+    margin: 20,
+    backgroundColor: 'rgba(254, 181, 166, 1)',
+    borderRadius: 40,
+    height: 45,
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  payment: {
+    marginLeft: 30,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  bankImg: {
+    width: 50,
+    height: 50,
+    marginRight: 20,
+  },
+});

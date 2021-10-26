@@ -16,6 +16,16 @@ const styles = StyleSheet.create({
     marginBottom:15
   },
 
+  addSeatText:{
+    fontWeight: 'bold',
+    color: 'rgba(86, 96, 179, 1)',
+    fontSize: 18,
+    marginLeft: 25,
+    marginRight:25,
+    marginTop:15,
+    marginBottom:15
+  },
+
   box: {
     marginLeft: 20,
     marginRight:20,
@@ -42,7 +52,7 @@ const styles = StyleSheet.create({
 
  
   btnConfirm: {
-    marginTop:50,
+    marginTop:100,
     margin: 20,
     backgroundColor: 'rgba(254, 181, 166, 1)',
     borderRadius: 40,
@@ -122,7 +132,7 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
   blockAddSeatPlus:{
-    marginLeft:70,
+    marginLeft:55,
     backgroundColor: "rgba(172, 211, 211, 0.28)",
     borderRadius: 10,
   },
@@ -133,10 +143,10 @@ const styles = StyleSheet.create({
   goWhere:{
     fontWeight: 'bold',
     color: 'rgba(86, 96, 179, 1)',
-    fontSize: 20,
+    fontSize: 25,
     marginLeft: 30,
     marginRight:20,
-    marginTop:20,
+    marginTop:40,
   },
   bankImg:{
     width: 35, height: 35, marginRight:10
