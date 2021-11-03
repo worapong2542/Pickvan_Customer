@@ -2,33 +2,113 @@ import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import Card from './Card';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Routedetail({ navigation, route }) {
   const { item } = route.params;
+  // console.log(item);
+
+  const [userId, setuserId] = useState('')
+
+  useEffect(() => {
+    getUserId();
+  }, []); 
+
+  async function getUserId() { 
+    const tempId = await AsyncStorage.getItem('@dataloginId');
+    setuserId(tempId)
+  }
+
+  async function sentbuyticket() {
+    await axios
+      .post('http://10.0.2.2:3001/user/buyticket', {
+        user_id: userId,
+        point_up: item[0].point_up_select,
+        point_down: item[0].point_down_select,
+        seat_amount: item[0].seat_select,
+        //schedule_id: ,
+      })
+      .then(res => call_back(res));
+  }
+  function call_back(res) {
+    const res_data = res.data;
+    if (res_data == 0) {
+      alert('จองเรียบร้อย');
+      // navigation.navigate('ConfirmTicket', { item: { item } })
+    } else {
+      alert('Some thing Worng');
+    }
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <Card>
-        <Text style={styles.textBold}>{item[0].vandata.time.substring(0, 5)}</Text>
-        <Text style={styles.textBold}>{item[0].vandata.name}</Text> 
-        <Text style={styles.textDefault}>{item[0].vandata.license}</Text> 
-      </Card>
+      <View style={{ flex: 2}}>
+        <Card>
+          <Text style={styles.textTime}>{item[0].vandata.time.substring(0, 5)}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>{item[0].vandata.name}</Text>
+            </View>
 
-      <Card>
-        <Text style={styles.textDefault}>จุดขึ้นรถ  :  {item[0].point_down_select}</Text>
-        <Text style={styles.textDefault}>จุดลงรถ  :  {item[0].point_up_select}</Text>
-      </Card>
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item[0].vandata.license}</Text>
+            </View>
+          </View>
+        </Card>
 
-      <Card>
-        <Text style={styles.textDefault}>จำนวน : <Text style={styles.textBold}>{item[0].seat_select} </Text> ที่นั่ง</Text>
-        <Text style={styles.textDefault}>รวม :  {item[0].vandata.price * item[0].seat_select}  บาท</Text>
-      </Card>
+        <Card>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จุดขึ้น : </Text>
+            </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('ConfirmTicket', { item: { item } })}>
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item[0].point_up_select}</Text>
+            </View>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จุดลง : </Text>
+            </View>
+
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item[0].point_down_select}</Text>
+            </View>
+          </View>
+        </Card>
+
+        <Card>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จำนวน : </Text>
+            </View>
+
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item[0].seat_select}       ที่</Text>
+            </View>
+          </View>
+          
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>รวม : </Text>
+            </View>
+
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item[0].vandata.price * item[0].seat_select}  บาท</Text>
+            </View>
+          </View>
+        </Card>
+      </View>
+
+      <View style={{ flex: 1}}>
+      {/* <TouchableOpacity onPress={() => sentbuyticket()}> */}
+      <TouchableOpacity onPress={() =>  navigation.navigate('ConfirmTicket', { item: { item } })}>
         <View style={styles.btnConfirm}>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, }}>จอง</Text>
         </View>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -44,11 +124,18 @@ const styles = StyleSheet.create({
   },
   textDefault: {
     color: '#5660B3',
-    fontSize: 16,
+    fontSize: 17,
     marginBottom: 10,
   },
+  textTime: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
   btnConfirm: {
-    marginTop:200,
+    marginTop:120,
     margin: 20,
     backgroundColor: 'rgba(254, 181, 166, 1)',
     borderRadius: 40,

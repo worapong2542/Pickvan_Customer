@@ -13,6 +13,7 @@ import Status from './Screen/Status';
 import uploadSlip from './Screen/uploadSlip';
 import Login from './Screen/login';
 import Register from './Screen/register';
+import Map from './Screen/Map';
 import {DrawerContent} from './Screen/DrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -129,7 +130,18 @@ function Pickvan({navigation}) {
           fontSize: 25,
         },
       }} />
-      <Stack.Screen name="Status" component={Status} />
+      <Stack.Screen name="Status" component={Status} 
+      options={{
+        title: 'สถานะการจอง',
+        headerTitleAlign: 'center',
+        headerTintColor: '#5660B3',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 25,
+        },
+      }} />
+
+      <Stack.Screen name="Map" component={Map} />
     </Stack.Navigator>
   );
 }

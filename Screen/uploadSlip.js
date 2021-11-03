@@ -40,6 +40,7 @@ function uploadSlip({navigation, route}) {
     await axios
       .post('http://10.0.2.2:3001/customer/test_upload', {
         photo: data,
+        // ticket_id:,
       })
       .then(res => alert("อัพโหลดรูปภาพสำเร็จ")); 
       navigation.navigate('Status', {item: {item}});

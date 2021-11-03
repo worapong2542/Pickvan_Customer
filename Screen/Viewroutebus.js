@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
   textBold: {
     color: '#5660B3',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 10,
   },
   textDefault: {
     color: '#5660B3',
-    fontSize: 16,
+    fontSize: 17,
     marginBottom: 10,
   },
   btnCheck: {

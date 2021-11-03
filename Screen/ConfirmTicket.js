@@ -9,65 +9,109 @@ function ConfirmTicket({navigation, route}) {
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
-      <Card>
-        <Text style={styles.textBold}>{item.item[0].vandata.time.substring(0, 5)}</Text>
-
-        <Text style={styles.textBold}>{item.item[0].vandata.name}</Text>
-
-        <Text style={styles.textDefault}>จุดขึ้นรถ : {item.item[0].point_down_select} </Text>
-
-        <Text style={styles.textDefault}> จุดลงรถ : {item.item[0].point_up_select}</Text>
-        
-        <Text style={styles.textDefault}>จำนวน :{' '}<Text style={styles.textBold}>{item.item[0].seat_select} </Text>{' '}ที่นั่ง</Text>
-        
-        <Text style={styles.textDefault}>รวม : {item.item[0].vandata.price * item.item[0].seat_select} บาท</Text>
-      </Card>
-
-      <View style={styles.payment}>
-        <Text style={styles.textPayment}>ช่องทางการโอนเงิน</Text>
-
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-          <Image
-            style={styles.bankImg}
-            source={require('../images/bank1.png')}
-          />
-          <View>
-            <Text style={styles.textDefault}>ธนาคารไทยพาณิชย์</Text>
-            <Text style={styles.textBold}>123-459-789</Text>
+      <View style={{ flex: 2}}>
+        <Card>
+          <Text style={styles.textTime}>{item.item[0].vandata.time.substring(0, 5)}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>{item.item[0].vandata.name}</Text>
+            </View>
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item.item[0].vandata.license}</Text>
+            </View>
           </View>
-        </View>
+        </Card>
 
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-          <Image
-            style={styles.bankImg}
-            source={require('../images/bank2.png')}
-          />
-          <View>
-            <Text style={styles.textDefault}>ธนาคารกรุงไทย</Text>
-            <Text style={styles.textBold}>123-459-789</Text>
+        <Card>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จุดขึ้น : </Text>
+            </View>
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item.item[0].point_up_select}</Text>
+            </View>
           </View>
-        </View>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{ flex: 2}}>
+              <Text style={styles.textDefault}>จุดลง : </Text>
+            </View>
+            <View style={{ flex: 1}}>
+              <Text style={styles.textDefault}>{item.item[0].point_down_select}</Text>
+              </View>
+            </View>
+          </Card>
 
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-          <Image
-            style={styles.bankImg}
-            source={require('../images/bank3.png')}
-          />
-          <View>
-            <Text style={styles.textDefault}>ธนาคารกรุงศรี</Text>
-            <Text style={styles.textBold}>123-459-789</Text>
+          <Card>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{ flex: 2}}>
+                <Text style={styles.textDefault}>จำนวน : </Text>
+              </View>
+
+              <View style={{ flex: 1}}>
+                <Text style={styles.textDefault}>{item.item[0].seat_select}       ที่</Text>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{ flex: 2}}>
+                <Text style={styles.textDefault}>รวม : </Text>
+              </View>
+              <View style={{ flex: 1}}>
+                <Text style={styles.textDefault}>{item.item[0].vandata.price * item.item[0].seat_select}  บาท</Text>
+              </View>
+            </View>
+          </Card>
+
+
+        <View style={styles.payment}>
+          <Text style={styles.textPayment}>ช่องทางการโอนเงิน</Text>
+
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Image
+              style={styles.bankImg}
+              source={require('../images/bank1.png')}
+            />
+            <View>
+              <Text style={styles.textDefault}>ธนาคารไทยพาณิชย์</Text>
+              <Text style={styles.textBold}>123-459-789</Text>
+            </View>
+          </View>
+
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Image
+              style={styles.bankImg}
+              source={require('../images/bank2.png')}
+            />
+            <View>
+              <Text style={styles.textDefault}>ธนาคารกรุงไทย</Text>
+              <Text style={styles.textBold}>123-459-789</Text>
+            </View>
+          </View>
+
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Image
+              style={styles.bankImg}
+              source={require('../images/bank3.png')}
+            />
+            
+            <View>
+              <Text style={styles.textDefault}>ธนาคารกรุงศรี</Text>
+              <Text style={styles.textBold}>123-459-789</Text>
+            </View>
+
           </View>
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('uploadSlip', {item: {item}})}>
-        <View style={styles.btnConfirm}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
-            ถัดไป
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <View style={{ flex: 1}}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('uploadSlip', {item: {item}})}>
+          <View style={styles.btnConfirm}>
+            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+              ถัดไป
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }
@@ -83,7 +127,7 @@ const styles = StyleSheet.create({
   },
   textDefault: {
     color: '#5660B3',
-    fontSize: 16,
+    fontSize: 17,
     marginBottom: 10,
   },
   textPayment: {
@@ -93,8 +137,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  textTime: {
+    color: '#5660B3',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
   btnConfirm: {
-    marginTop: 50,
+    // marginTop: 50,
     margin: 20,
     backgroundColor: 'rgba(254, 181, 166, 1)',
     borderRadius: 40,
