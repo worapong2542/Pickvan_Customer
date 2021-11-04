@@ -1,4 +1,11 @@
-import {View,Image,Platform,Text,TouchableOpacity,ScrollView,} from 'react-native';
+import {
+  View,
+  Image,
+  Platform,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import axios from 'axios';
 import React, {useState, useEffect, useRef} from 'react';
@@ -78,23 +85,25 @@ function Home({navigation}) {
 
   function select() {
     const data = [];
-    data.push({  //ส่งข้อมูลที่เลือกไปหน้า Viewroutebus
+    data.push({
+      //ส่งข้อมูลที่เลือกไปหน้า Viewroutebus
       routs: routs,
       point_up_select: point_up_select,
       point_down_select: point_down_select,
       seat: seat,
     });
+
     if (routs == '' || point_up_select == '' || point_down_select == '') {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     } else {
+      navigation.navigate('Viewroutebus', {item: data});
     }
-    navigation.navigate('Viewroutebus', {item: data});
   }
-  
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.goWhere}>ไปไหนดี ?</Text>
-     
+
       <View style={styles.dropdownsRow}>
         <SelectDropdown
           data={data_route}
@@ -108,12 +117,12 @@ function Home({navigation}) {
           }}
           defaultButtonText={'เลือกสายรถ'}
           buttonTextAfterSelection={(selectedItem, index) => {
-            //return selected data 
+            //return selected data
             routs = selectedItem.title;
             return selectedItem.title;
           }}
           rowTextForSelection={(item, index) => {
-            //show selected data 
+            //show selected data
             return item.title;
           }}
           buttonStyle={styles.dropdown1BtnStyle}
