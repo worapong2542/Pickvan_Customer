@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Routedetail({ navigation, route }) {
   const { item } = route.params;
-  // console.log(item);
 
   const [userId, setuserId] = useState('')
 
@@ -20,23 +19,23 @@ function Routedetail({ navigation, route }) {
   }
 
   async function sentbuyticket() {
-    await axios
-      .post('http://10.0.2.2:3001/user/buyticket', {
+    await axios.post('http://10.0.2.2:3001/customer/buyticket', {
         user_id: userId,
         point_up: item[0].point_up_select,
         point_down: item[0].point_down_select,
         seat_amount: item[0].seat_select,
-        //schedule_id: ,
+        schedule_id: item[0].vandata.id,
+        seat_all:item[0].vandata.seat_all,
       })
       .then(res => call_back(res));
   }
   function call_back(res) {
-    const res_data = res.data;
-    if (res_data == 0) {
-      alert('จองเรียบร้อย');
-      // navigation.navigate('ConfirmTicket', { item: { item } })
-    } else {
+    if (res.data == "1") {
       alert('Some thing Worng');
+    } else {
+      alert('จองเรียบร้อย');
+      item.push({ticketid:res.data})
+      navigation.navigate('ConfirmTicket', { item: { item } })
     }
   }
 
@@ -103,7 +102,7 @@ function Routedetail({ navigation, route }) {
 
       <View style={{ flex: 1}}>
       {/* <TouchableOpacity onPress={() => sentbuyticket()}> */}
-      <TouchableOpacity onPress={() =>  navigation.navigate('ConfirmTicket', { item: { item } })}>
+      <TouchableOpacity onPress={() => sentbuyticket()}>
         <View style={styles.btnConfirm}>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, }}>จอง</Text>
         </View>

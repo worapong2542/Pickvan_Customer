@@ -7,7 +7,6 @@ import axios from 'axios';
 function uploadSlip({navigation, route}) {
   const {item} = route.params;
   const [photo, setphoto] = useState();
-
   handlerChoosePhoto = () => {
     const options = {
       noData: true,
@@ -36,14 +35,24 @@ function uploadSlip({navigation, route}) {
   }
 
   async function uploadImage(data) {
-    // console.log(data);
     await axios
-      .post('http://10.0.2.2:3001/customer/test_upload', {
+      .post('http://10.0.2.2:3001/customer/upload_img', {
         photo: data,
-        // ticket_id:,
+        ticket_id:item.item[1].ticketid,
       })
-      .then(res => alert("อัพโหลดรูปภาพสำเร็จ")); 
-      navigation.navigate('Status', {item: {item}});
+      .then(res => check_res(res.data)); 
+     
+  }
+
+  function check_res(res){
+    if(res == "0"){
+      navigation.navigate('Status', {item: item});
+    }else if(res == "1"){
+      alert("เกิดข้อผิดผลาดบางอย่าง")
+    }else{
+      alert("ตั๋วของคุณหมดอายุกรุณาซื้อตั๋วใหม่อีกครั้ง")
+      navigation.push("Home")
+    }
   }
 
   return (

@@ -7,7 +7,8 @@ import {getDrawerStatusFromState} from '@react-navigation/drawer';
 
 function Status({navigation, route}) {
   const {item} = route.params;
-  const data = item.item.item.item[0];
+  console.log(item)
+  const data = item.item[0];
   // console.log(data);
 
   return (
@@ -32,7 +33,7 @@ function Status({navigation, route}) {
           </View>
 
           <View style={{ flex: 1}}>
-            <Text style={styles.textDefault}>{data.vandata.id}</Text>
+            <Text style={styles.textDefault}>{item.item[1].ticketid}</Text>
           </View>
         </View>
 

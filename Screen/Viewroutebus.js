@@ -4,16 +4,15 @@ import React, {useState, useEffect, useRef} from 'react';
 import Card from './Card';
 import CardDate from './cardDate';
 
-function Viewroutebus({navigation, route}) {
+function Viewroutebus({route, navigation}) {
   const [dataschedule, setdataschedule] = useState([]);
   const [select_date, set_select_date] = useState(0);
   const date_format = [];
 
   //set data from api in reviews
   const [reviews, setReviews] = useState([]);
-  const {item} = route.params; //get data from home
-  console.log(item);
-
+  //get data from home
+  const {item} = route.params;
   //auto start set date
   date();
 
@@ -38,7 +37,6 @@ function Viewroutebus({navigation, route}) {
       date_format.push(year + '-' + month + '-' + day);
     }
   }
-  console.log(date_format[1]);
 
   //push data to routedetail
   function navto_uploadpage(item_select) {
@@ -55,14 +53,19 @@ function Viewroutebus({navigation, route}) {
   //api
   async function getschedule(x) {
     await axios
-      .get('http://10.0.2.2:3001/customer/getschedule/' + date_format[x])
+      .get(
+        'http://10.0.2.2:3001/customer/getschedule/' +
+          date_format[x] +
+          '/' +
+          item[0].routs,
+      )
       .then(res => setdataschedule(res.data));
   }
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <View style={{flexDirection: 'row', marginLeft:10}}>
+        <View style={{flexDirection: 'row', marginLeft: 10}}>
           {/* show 3 days */}
           <CardDate>
             <TouchableOpacity
@@ -94,22 +97,25 @@ function Viewroutebus({navigation, route}) {
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => navto_uploadpage(item)}>
               <Card>
-                <Text style={styles.textBold}>
-                  {item.time.substring(0, 5)}
-                </Text>
+                <Text style={styles.textBold}>{item.time.substring(0, 5)}</Text>
 
                 <Text style={styles.textDefault}>{item.name}</Text>
 
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.textDefault}>ที่นั่งเหลือ :{' '}<Text style={styles.textBold}>{item.seat_all - item.seat_onbuy}{' '}</Text>{' '}ที่</Text>
-              
+                  <Text style={styles.textDefault}>
+                    ที่นั่งเหลือ :{' '}
+                    <Text style={styles.textBold}>
+                      {item.seat_all - item.seat_onbuy}{' '}
+                    </Text>{' '}
+                    ที่
+                  </Text>
+
                   <TouchableOpacity onPress={() => navto_uploadpage(item)}>
                     <View style={styles.btnCheck}>
                       <Text style={styles.textCheck}>จอง</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
-                
               </Card>
             </TouchableOpacity>
           )}
@@ -134,12 +140,12 @@ const styles = StyleSheet.create({
   textBold: {
     color: '#5660B3',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 10,
   },
   textDefault: {
     color: '#5660B3',
-    fontSize: 17,
+    fontSize: 16,
     marginBottom: 10,
   },
   btnCheck: {

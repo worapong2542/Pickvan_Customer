@@ -104,7 +104,7 @@ function ConfirmTicket({navigation, route}) {
 
       <View style={{ flex: 1}}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('uploadSlip', {item: {item}})}>
+          onPress={() => navigation.navigate('uploadSlip', {item: item})}>
           <View style={styles.btnConfirm}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
               ถัดไป
