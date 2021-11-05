@@ -7,6 +7,7 @@ import axios from 'axios';
 function uploadSlip({navigation, route}) {
   const {item} = route.params;
   const [photo, setphoto] = useState();
+  
   handlerChoosePhoto = () => {
     const options = {
       noData: true,
@@ -22,7 +23,6 @@ function uploadSlip({navigation, route}) {
       }
     });
   };
-
 
   function convertImage() {
     if (photo == null) {

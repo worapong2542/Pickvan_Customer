@@ -18,6 +18,7 @@ import MyTicket from './Screen/MyTicket';
 import {DrawerContent} from './Screen/DrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ViewMyTicket from './Screen/ViewMyTicket';
+import Payment from './Screen/Payment';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -148,6 +149,7 @@ function Pickvan({navigation}) {
 
       <Stack.Screen name="MyTicket" component={MyTicket} />
       <Stack.Screen name="ViewMyTicket" component={ViewMyTicket} />
+      <Stack.Screen name="Payment" component={Payment} />
     </Stack.Navigator>
   );
 }

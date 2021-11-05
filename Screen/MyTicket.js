@@ -6,43 +6,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function MyTicket({route, navigation}) {
   const [dataTicket, setdataTicket] = useState([]);
-  const [userId, setuserId] = useState('')
 
+  const [seconds, setSeconds] = useState(0);
+
+  //ดึง ticket ทุก  30 วิ
   useEffect(() => {
-    getuserId();
-  }, []); 
-
-  async function getuserId() { 
-    const id = await AsyncStorage.getItem('@dataloginId');
-    setuserId(id)
-  }
-  console.log(userId);
+    const interval = setInterval(() => {
+      getTicket()
+      //ฟังก์ชั่นที่จะให้ทำงานทุก 30 วิ
+      setSeconds(seconds => seconds + 1);
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     getTicket();
   }, []);
 
   async function getTicket() {
+    const id = await AsyncStorage.getItem('@dataloginId');
     await axios
-      .get('http://10.0.2.2:3001/customer/get_myticket'+ '/' +userId)
+      .get('http://10.0.2.2:3001/customer/get_myticket'+ '/' +id)
       .then(res => setdataTicket(res.data));
   }
 
-  console.log(dataTicket);
-
   //push data to ViewMyticket
-  function navto_ViewMyticket(item_select) {
-    let data = [];
-    data.push({
-      ticket_id: item.ticket_id,
-      time: item.time.substring(0, 5),
-      date: item.date.substring(0, 10),
-      name: item.name,
-      seat_amount: item.seat_amount,
-    });
-    navigation.navigate('ViewMyticket', {item: data});
+  function navto_ViewMyticket(item) {
+  navigation.navigate('ViewMyTicket', {item:item});
   }
-
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
