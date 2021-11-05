@@ -37,6 +37,14 @@ export function DrawerContent({props, navigation}) {
             <Text style={styles.txtUserName}> {userName}</Text>
           </View>
         </View>
+
+        <View style={styles.drawerMenu}>
+          <DrawerItem
+            label="ตั๋วของฉัน"
+            onPress={() => navigation.navigate('MyTicket')}
+          />
+        </View>
+
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem label="ออกจากระบบ" onPress={() => del()} />
@@ -66,5 +74,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderColor: '#f4f4f4',
     borderTopWidth: 1,
+  },
+  drawerMenu:{
+    paddingTop: 20,
+    paddingLeft: 5,
   },
 });

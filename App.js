@@ -14,6 +14,7 @@ import uploadSlip from './Screen/uploadSlip';
 import Login from './Screen/login';
 import Register from './Screen/register';
 import Map from './Screen/Map';
+import MyTicket from './Screen/MyTicket';
 import {DrawerContent} from './Screen/DrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -81,9 +82,10 @@ function Pickvan({navigation}) {
           },
           headerStyle: {
             backgroundColor: '#B0D8D8',
-            height: 80,
+            height: 50,
           },
-        }}></Stack.Screen>
+        }}
+        ></Stack.Screen>
 
       <Stack.Screen
         name="Viewroutebus"
@@ -142,6 +144,8 @@ function Pickvan({navigation}) {
       }} />
 
       <Stack.Screen name="Map" component={Map} />
+
+      <Stack.Screen name="MyTicket" component={MyTicket} />
     </Stack.Navigator>
   );
 }

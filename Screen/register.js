@@ -6,12 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  SafeAreaView
 } from 'react-native';
-import {Link, withRouter} from 'react-router-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {sha256} from 'react-native-sha256';
+import {useHeaderHeight} from '@react-navigation/stack';
 
 function Register({navigation}) {
   const [userName, setuserName] = useState('');
@@ -69,77 +70,79 @@ function Register({navigation}) {
     <ImageBackground
       source={require('../images/registBg.png')}
       style={{width: '100%', height: '100%'}}>
-        
-      <KeyboardAvoidingView style={styles.kbView}>
-      <Text style={styles.Textlabel}>ชื่อผู้ใช้ </Text>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            onChangeText={userName_input => setuserName(userName_input)}
-          />
-        </View>
-      </View>
 
-      <Text style={styles.Textlabel}>อีเมลล์</Text>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            onChangeText={email_input => setEmail(email_input)}
-          />
-        </View>
-      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}>
+        <SafeAreaView style={styles.container2}>
 
-      <Text style={styles.Textlabel}>รหัสผ่าน</Text>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            secureTextEntry={true}
-            onChangeText={password_input => setPassword(password_input)}
-          />
+        <Text style={styles.Textlabel}>ชื่อผู้ใช้ </Text>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={userName_input => setuserName(userName_input)}
+            />
+          </View>
         </View>
-      </View>
 
-      <Text style={styles.Textlabel}>ยืนยันรหัสผ่าน</Text>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            secureTextEntry={true}
-            onChangeText={confirm_password_input =>
-              setconfirm_password(confirm_password_input)
-            }
-          />
+        <Text style={styles.Textlabel}>อีเมลล์</Text>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput onChangeText={email_input => setEmail(email_input)} />
+          </View>
         </View>
-      </View>
 
-      <Text style={styles.Textlabel}>เบอร์โทรศัพท์</Text>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            secureTextEntry={true}
-            onChangeText={phoneNum_input => setphoneNum(phoneNum_input)}
-            keyboardType="numeric"
-          />
+        <Text style={styles.Textlabel}>รหัสผ่าน</Text>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              secureTextEntry={true}
+              onChangeText={password_input => setPassword(password_input)}
+            />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => checkRegister()}
-            style={styles.button}>
-            <Text style={styles.buttonText}> ลงทะเบียน </Text>
-          </TouchableOpacity>
+        <Text style={styles.Textlabel}>ยืนยันรหัสผ่าน</Text>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              secureTextEntry={true}
+              onChangeText={confirm_password_input =>
+                setconfirm_password(confirm_password_input)
+              }
+            />
+          </View>
         </View>
-      </View>
+
+        <Text style={styles.Textlabel}>เบอร์โทรศัพท์</Text>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={phoneNum_input => setphoneNum(phoneNum_input)}
+              keyboardType="numeric"
+            />
+          </View>
+        </View>
+
+        <View style={styles.container}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={() => checkRegister()}
+              style={styles.button}>
+              <Text style={styles.buttonText}> ลงทะเบียน </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  kbView:{
-    flex: 1
-  },
+  container2: {
+    flex: 1,
+},
   container: {
     alignItems: 'center',
   },
@@ -181,3 +184,4 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
+

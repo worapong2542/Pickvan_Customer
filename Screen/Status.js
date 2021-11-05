@@ -1,16 +1,37 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import axios from 'axios';
 import React, {useState, useEffect, useRef} from 'react';
 import Card from './Card';
-import {getDrawerStatusFromState} from '@react-navigation/drawer';
 
 function Status({navigation, route}) {
   const {item} = route.params;
-  console.log(item)
   const data = item.item[0];
-  // console.log(data);
 
+  // const [Status, setStatus] = useState([]);
+
+  // useEffect(() => {
+  //   getStatus();
+  // }, []);
+
+  // async function getStatus() {
+  //   await axios
+  //     .get('http://10.0.2.2:3001/customer/getStatus')
+  //     .then(res => setStatus(res.data));
+  // }
+
+  // function setText() {
+  //   if (Status = 0) {
+      
+  //   } else if (Status = 1) {
+      
+  //   } else if (Status = 2){
+
+  //   }else{
+
+  //   }
+  // }
+
+  
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>

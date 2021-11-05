@@ -54,6 +54,7 @@ function Login({navigation}) {
     <ImageBackground
       source={require('../images/loginBg.png')}
       style={{width: '100%', height: '100%'}}>
+        
       <View style={styles.title}>
         <Text style={styles.Texttitle}> PickVan</Text>
       </View>
