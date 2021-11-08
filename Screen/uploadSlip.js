@@ -8,13 +8,12 @@ function uploadSlip({navigation, route}) {
   const {item} = route.params;
   const [photo, setphoto] = useState();
   
-  handlerChoosePhoto = () => {
+  function handlerChoosePhoto () {
     const options = {
       noData: true,
     };
 
     launchImageLibrary(options, response => {
-      // console.log(response.assets[0].uri);
       if (response.didCancel == true) {
       } else {
         if (response.assets[0].uri) {
@@ -64,7 +63,7 @@ function uploadSlip({navigation, route}) {
           style={{width: 300, height: 800, resizeMode: 'contain'}}
         />
       )}
-      <TouchableOpacity onPress={handlerChoosePhoto} >
+      <TouchableOpacity onPress={()=>handlerChoosePhoto()} >
         <View style={styles.btnupload}>
           <Text style={{color: 'gray', fontWeight: 'bold', fontSize: 18}}>
             อัพโหลดสลิป

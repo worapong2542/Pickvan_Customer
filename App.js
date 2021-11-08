@@ -30,7 +30,6 @@ function Pickvan({navigation}) {
   }, []);
 
   async function checkAsyncStorage() {
-    // console.log('AsyncFunc');
     try {
       const email = await AsyncStorage.getItem('@datalogin');
       if (email === undefined || email === '' || email === null) {

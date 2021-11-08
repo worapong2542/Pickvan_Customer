@@ -64,11 +64,9 @@ function Payment({navigation, route}) {
   }
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex: 2}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
+      <View style={{flex: 1}}>
         <View style={styles.payment}>
-          <Text style={styles.textPayment}>ช่องทางการโอนเงิน</Text>
-
           <View style={{flexDirection: 'row', marginTop: 10}}>
             <Image
               style={styles.bankImg}
@@ -105,12 +103,11 @@ function Payment({navigation, route}) {
         </View>
       </View>
 
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View style={styles.con1}>
           {photo && (
             <Image
               source={{uri: photo.assets[0].uri}}
-              style={{width: 300, height: 800, resizeMode: 'contain'}}
+              style={{marginTop:140, width: 220, height: 440, resizeMode: 'contain'}}
             />
           )}
           <TouchableOpacity onPress={handlerChoosePhoto}>
@@ -131,8 +128,7 @@ function Payment({navigation, route}) {
             </View>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -177,7 +173,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   con1: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 80,

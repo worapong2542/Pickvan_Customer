@@ -68,7 +68,7 @@ function Status({navigation, route}) {
           </View>
         </View>
 
-        <Text style={styles.textStatus}>สถานะ</Text>
+        <Text style={styles.textStatus}>กำลังรอตรวจสอบ</Text>
       </Card>
 
       <Card>
