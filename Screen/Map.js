@@ -14,19 +14,20 @@ function Map({navigation, route}) {
       longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
     },
     droplocationCords: {
-      latitude: 13.7793017,
-      longitude: 100.5603967,
+      latitude: 13.285909416869071,
+      longitude: 100.92419757312429,
       latitudeDelta: 0.03,
       longitudeDelta: 0.005,
-    },
+    },isFocused: false,fixedOnUUID: "",
   });
+  //13.285909416869071, 100.92419757312429
 
   const [seconds, setSeconds] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
       set();
       setSeconds(seconds => seconds + 1);
-    }, 10000);
+    }, 15000);
     return () => clearInterval(interval);
   }, []);
   function set() {
@@ -38,13 +39,14 @@ function Map({navigation, route}) {
         longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
       },
       droplocationCords: {
-        latitude: 13.59984,
-        longitude: 100.721244,
+        latitude: 13.286999423678475,
+        longitude: 100.93491412305957,
         latitudeDelta: 0.03,
         longitudeDelta: 0.005,
       },
     });
   }
+  //13.286999423678475, 100.93491412305957
 
   const mapRef = useRef();
   const {pickupCords, droplocationCords} = state;
@@ -67,7 +69,7 @@ function Map({navigation, route}) {
           strokeColor="hotpink"
           optimizeWaypoints={true}
           onReady={result => {
-            mapRef.current.fitToCoordinates(result.coordinates, {
+            mapRef.current.animateToRegion(result.coordinates, {
               edgePadding: {
                 right: 30,
                 bottom: 300,
@@ -81,6 +83,7 @@ function Map({navigation, route}) {
     </View>
   );
 }
+//animateToRegion
 
 const styles = StyleSheet.create({
   container: {

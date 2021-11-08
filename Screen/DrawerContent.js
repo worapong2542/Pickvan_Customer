@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Drawer} from 'react-native-paper';
-import {DrawerContentScrollView, DerItem} from '@react-navigation/drawer';
+import {DrawerContentScrollView,  DrawerItem} from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState, useEffect} from 'react';
 
