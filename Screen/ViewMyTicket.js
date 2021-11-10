@@ -8,31 +8,23 @@ function ViewMyTicket({navigation, route}) {
   console.log(item);
 
   const [text, setText] = useState('');
-  // const [seconds, setSeconds] = useState(0);
-  // const [status, setStatus] = useState('');
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     getStatus()
-  //     setSeconds(seconds => seconds + 1);
-  //   }, 30000);
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // useEffect(() => {
-  //   getStatus();
-  // }, []);
-
-  // async function getStatus() {
-  //   await axios
-  //     .get('http://10.0.2.2:3001/customer/get_Status'+ '/' + item.ticket_id)
-  //     .then(res => setStatus(res.data));
-  // }
-
+  const [seconds, setSeconds] = useState(0);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
-    checkStatus();
+    const interval = setInterval(() => {
+      getStatus()
+      setSeconds(seconds => seconds + 1);
+    }, 30000);
+    return () => clearInterval(interval);
   }, []);
+
+  async function getStatus() {
+    await axios
+      .get('http://10.0.2.2:3001/customer/get_Status/' + item.ticket_id)
+      .then(res => setStatus(res.data));
+      checkStatus();
+  }
 
   function checkStatus() {
     if (item.status_id == 0) {
