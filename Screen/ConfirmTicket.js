@@ -104,6 +104,7 @@ function ConfirmTicket({navigation, route}) {
 
       <View style={{ flex: 1}}>
         <TouchableOpacity
+          // ส่ง item ไปเพื่อใช้ id ว่าใครจอง
           onPress={() => navigation.navigate('uploadSlip', {item: item})}>
           <View style={styles.btnConfirm}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>

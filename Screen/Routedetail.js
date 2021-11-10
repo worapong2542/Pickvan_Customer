@@ -34,8 +34,8 @@ function Routedetail({ navigation, route }) {
       alert('Some thing Worng');
     } else {
       alert('จองเรียบร้อย');
-      item.push({ticketid:res.data})
-      navigation.navigate('ConfirmTicket', { item: { item } })
+      item.push({ticketid:res.data}) //push ticketid เลขตั๋วไปใช้หน้าต่อไป
+      navigation.navigate('ConfirmTicket', { item: { item } }) //ส่ง item รายละเอียดหน้ารี้ไป
     }
   }
 

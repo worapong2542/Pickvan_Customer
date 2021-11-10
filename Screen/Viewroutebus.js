@@ -62,34 +62,36 @@ function Viewroutebus({route, navigation}) {
       .then(res => setdataschedule(res.data));
   }
 
+  const [test, settest] = useState({colorId: 0});
+
+  function testChange(id_color, id_date) {
+    settest({colorId: id_color});
+    set_select_date(id_date);
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{flexDirection: 'row', marginLeft: 10}}>
-          {/* show 3 days */}
-          <CardDate>
+
             <TouchableOpacity
-              style={styles.boxDate}
-              onPress={() => set_select_date(0)}>
+               style={test.colorId === 0 ? styles.red : styles.button}
+               onPress={() => testChange(0, 0)}>
               <Text style={styles.textDate}>{date_format[0]}</Text>
             </TouchableOpacity>
-          </CardDate>
 
-          <CardDate>
             <TouchableOpacity
-              style={styles.boxDate}
-              onPress={() => set_select_date(1)}>
+               style={test.colorId === 2 ? styles.red : styles.button}
+               onPress={() => testChange(2, 1)}>
               <Text style={styles.textDate}>{date_format[1]}</Text>
             </TouchableOpacity>
-          </CardDate>
 
-          <CardDate>
             <TouchableOpacity
-              style={styles.boxDate}
-              onPress={() => set_select_date(2)}>
+              style={test.colorId === 3 ? styles.red : styles.button}
+              onPress={() => testChange(3, 2)}>
               <Text style={styles.textDate}>{date_format[2]}</Text>
             </TouchableOpacity>
-          </CardDate>
+
         </View>
 
         <FlatList
@@ -161,5 +163,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  red: {
+    backgroundColor: '#FEB5A6',
+    alignItems: 'center',
+    width: 120,
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    width: 120,
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
   },
 });

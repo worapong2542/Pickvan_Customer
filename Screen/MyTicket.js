@@ -12,7 +12,7 @@ function MyTicket({route, navigation}) {
   //ดึง ticket ทุก  30 วิ
   useEffect(() => {
     const interval = setInterval(() => {
-      getTicket()
+      getTicket();
       //ฟังก์ชั่นที่จะให้ทำงานทุก 30 วิ
       setSeconds(seconds => seconds + 1);
     }, 30000);
@@ -26,13 +26,13 @@ function MyTicket({route, navigation}) {
   async function getTicket() {
     const id = await AsyncStorage.getItem('@dataloginId');
     await axios
-      .get('http://10.0.2.2:3001/customer/get_myticket'+ '/' +id)
+      .get('http://10.0.2.2:3001/customer/get_myticket' + '/' + id)
       .then(res => setdataTicket(res.data));
   }
 
   //push data to ViewMyticket
   function navto_ViewMyticket(item) {
-  navigation.navigate('ViewMyTicket', {item:item});
+    navigation.navigate('ViewMyTicket', {item: item});
   }
 
   return (
@@ -43,15 +43,14 @@ function MyTicket({route, navigation}) {
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => navto_ViewMyticket(item)}>
               <Card>
-                  <Text>เลขตั๋ว : {item.ticket_id}</Text>
-                  <Text>เวลา : {item.time.substring(0, 5)}</Text>
-                  <Text>วันที่ : {item.date.substring(0, 10)}</Text>
-                  <Text>สายรถ : {item.name}</Text>
-                  <Text>จำนวน : {item.seat_amount}</Text>
+                <Text style={styles.textTime}>{item.date.substring(0, 10)}</Text>
+                <Text style={styles.textDefault}>{item.name}</Text>
+                <Text style={styles.textDefault}>เวลา : {item.time.substring(0, 5)}</Text>
+                <Text style={styles.textDefault}>จำนวน : {item.seat_amount}</Text>
               </Card>
             </TouchableOpacity>
           )}
-        /> 
+        />
       </View>
     </View>
   );
@@ -60,15 +59,13 @@ function MyTicket({route, navigation}) {
 export default MyTicket;
 
 const styles = StyleSheet.create({
-  textDate: {
+  textTime: {
     color: '#5660B3',
     fontWeight: 'bold',
-    fontSize: 16,
-    textAlign: 'center',
+    fontSize: 17,
+    marginBottom: 10,
   },
-  boxDate: {
-    width: 91,
-  },
+ 
   textBold: {
     color: '#5660B3',
     fontWeight: 'bold',
@@ -79,5 +76,5 @@ const styles = StyleSheet.create({
     color: '#5660B3',
     fontSize: 16,
     marginBottom: 10,
-  }
+  },
 });

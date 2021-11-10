@@ -6,31 +6,6 @@ import Card from './Card';
 function Status({navigation, route}) {
   const {item} = route.params;
   const data = item.item[0];
-
-  // const [Status, setStatus] = useState([]);
-
-  // useEffect(() => {
-  //   getStatus();
-  // }, []);
-
-  // async function getStatus() {
-  //   await axios
-  //     .get('http://10.0.2.2:3001/customer/getStatus')
-  //     .then(res => setStatus(res.data));
-  // }
-
-  // function setText() {
-  //   if (Status = 0) {
-      
-  //   } else if (Status = 1) {
-      
-  //   } else if (Status = 2){
-
-  //   }else{
-
-  //   }
-  // }
-
   
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>

@@ -1,4 +1,4 @@
-import {Image,TouchableOpacity} from 'react-native';
+import {Image, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -85,8 +85,7 @@ function Pickvan({navigation}) {
             backgroundColor: '#B0D8D8',
             height: 50,
           },
-        }}
-        ></Stack.Screen>
+        }}></Stack.Screen>
 
       <Stack.Screen
         name="Viewroutebus"
@@ -114,40 +113,74 @@ function Pickvan({navigation}) {
           },
         }}
       />
-      <Stack.Screen name="ConfirmTicket" component={ConfirmTicket}
-       options={{
-        title: 'ยืนยันการจอง',
-        headerTitleAlign: 'center',
-        headerTintColor: '#5660B3',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 25,
-        },
-      }} />
-      <Stack.Screen name="uploadSlip" component={uploadSlip} options={{
-        title: 'อัพโหลดสลิป',
-        headerTitleAlign: 'center',
-        headerTintColor: '#5660B3',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 25,
-        },
-      }} />
-      <Stack.Screen name="Status" component={Status} 
-      options={{
-        title: 'สถานะการจอง',
-        headerTitleAlign: 'center',
-        headerTintColor: '#5660B3',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 25,
-        },
-      }} />
+      <Stack.Screen
+        name="ConfirmTicket"
+        component={ConfirmTicket}
+        options={{
+          title: 'ยืนยันการจอง',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="uploadSlip"
+        component={uploadSlip}
+        options={{
+          title: 'อัพโหลดสลิป',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Status"
+        component={Status}
+        options={{
+          title: 'สถานะการจอง',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
 
       <Stack.Screen name="Map" component={Map} />
 
-      <Stack.Screen name="MyTicket" component={MyTicket} />
-      <Stack.Screen name="ViewMyTicket" component={ViewMyTicket} />
+      <Stack.Screen
+        name="MyTicket"
+        component={MyTicket}
+        options={{
+          title: 'ตั๋วของฉัน',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ViewMyTicket"
+        component={ViewMyTicket}
+        options={{
+          title: 'รายละเอียด',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
       <Stack.Screen name="Payment" component={Payment} />
     </Stack.Navigator>
   );

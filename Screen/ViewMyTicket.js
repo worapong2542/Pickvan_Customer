@@ -5,8 +5,30 @@ import Card from './Card';
 
 function ViewMyTicket({navigation, route}) {
   const {item} = route.params;
+  console.log(item);
 
   const [text, setText] = useState('');
+  // const [seconds, setSeconds] = useState(0);
+  // const [status, setStatus] = useState('');
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     getStatus()
+  //     setSeconds(seconds => seconds + 1);
+  //   }, 30000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // useEffect(() => {
+  //   getStatus();
+  // }, []);
+
+  // async function getStatus() {
+  //   await axios
+  //     .get('http://10.0.2.2:3001/customer/get_Status'+ '/' + item.ticket_id)
+  //     .then(res => setStatus(res.data));
+  // }
+
 
   useEffect(() => {
     checkStatus();
