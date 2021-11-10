@@ -5,11 +5,9 @@ import Card from './Card';
 
 function ViewMyTicket({navigation, route}) {
   const {item} = route.params;
-  console.log(item);
-
   const [text, setText] = useState('');
   const [seconds, setSeconds] = useState(0);
-  const [status, setStatus] = useState('');
+  let status = 0
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,19 +17,23 @@ function ViewMyTicket({navigation, route}) {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    getStatus()
+  }, []);
+
   async function getStatus() {
     await axios
       .get('http://10.0.2.2:3001/customer/get_Status/' + item.ticket_id)
-      .then(res => setStatus(res.data));
-      checkStatus();
+      .then(res => checkStatus(res.data));
   }
 
-  function checkStatus() {
-    if (item.status_id == 0) {
+  function checkStatus(value) {
+    status = value
+    if (value == 0) {
       setText('ยังไม่ชำระเงิน กดเพื่อชำระเงิน');
-    } else if (item.status_id == 1) {
+    } else if (value == 1) {
       setText('รอตรวจสอบ');
-    } else if (item.status_id == 2) {
+    } else if (value == 2) {
       setText('ชำระเงินเรียบร้อยแล้ว');
     } else {
       setText('ตั๋วของคุณถูกยกเลิก');
@@ -39,11 +41,11 @@ function ViewMyTicket({navigation, route}) {
   }
 
   function checkPaid(){
-    if (item.status_id == 0) {
+    if (status == 0) {
         navigation.navigate('Payment',{item:item})
-      } else if (item.status_id == 1) {
+      } else if (status == 1) {
         setText('รอตรวจสอบ');
-      } else if (item.status_id == 2) {
+      } else if (status == 2) {
         setText('ชำระเงินเรียบร้อยแล้ว');
       } else {
         setText('ตั๋วของคุณถูกยกเลิก');
