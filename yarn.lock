@@ -5674,6 +5674,11 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-get-location@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-get-location/-/react-native-get-location-2.1.2.tgz#d039502ba792a2fdbcea1f24c4c364601388cec9"
+  integrity sha512-gTGdp1n9S7916gMF4UKHeK4aj5bqat/5fVPGZeo6SUPxRMt49kSphnUGk9H1aWDw42K/pkVjaJ+yspYXMqj8rg==
+
 react-native-image-base64@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/react-native-image-base64/-/react-native-image-base64-0.1.4.tgz#0a4687740de9b04df63e649c5946fc646bc0f4e9"
@@ -5688,6 +5693,11 @@ react-native-iphone-x-helper@^1.2.1, react-native-iphone-x-helper@^1.3.0, react-
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
+
+react-native-location-enabler@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-location-enabler/-/react-native-location-enabler-4.1.0.tgz#f4d809103c3f39e50b775d374ac544cbc6a0c429"
+  integrity sha512-SKjO+ks2B+1l2lbRCMtZ9QQ5BEIsIAHEztAWvWRyKZKVHHkes4vwD1nLazOvGjkAEnDnqbnr6LGan8OiwmX9Ow==
 
 react-native-maps-directions@^1.8.0:
   version "1.8.0"

@@ -6,17 +6,17 @@ import Card from './Card';
 function Status({navigation, route}) {
   const {item} = route.params;
   const data = item.item[0];
-  
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
         <Text style={styles.textTime}>{data.vandata.time.substring(0, 5)}</Text>
         <View style={{flexDirection: 'row'}}>
-          <View style={{ flex: 2}}>
-             <Text style={styles.textDefault}>{data.vandata.name}</Text>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>{data.vandata.name}</Text>
           </View>
 
-          <View style={{ flex: 1}}>
+          <View style={{flex: 1}}>
             <Text style={styles.textDefault}>{data.vandata.license}</Text>
           </View>
         </View>
@@ -24,22 +24,24 @@ function Status({navigation, route}) {
 
       <Card>
         <View style={{flexDirection: 'row'}}>
-          <View style={{ flex: 2}}>
+          <View style={{flex: 2}}>
             <Text style={styles.textDefault}>หมายเลขตั๋ว</Text>
           </View>
 
-          <View style={{ flex: 1}}>
+          <View style={{flex: 1}}>
             <Text style={styles.textDefault}>{item.item[1].ticketid}</Text>
           </View>
         </View>
 
         <View style={{flexDirection: 'row'}}>
-          <View style={{ flex: 2}}>
-             <Text style={styles.textDefault}>จำนวน   {data.seat_select}   ที่</Text>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>จำนวน {data.seat_select} ที่</Text>
           </View>
 
-          <View style={{ flex: 1}}>
-            <Text style={styles.textDefault}>{data.vandata.price * data.seat_select}  บาท</Text>
+          <View style={{flex: 1}}>
+            <Text style={styles.textDefault}>
+              {data.vandata.price * data.seat_select} บาท
+            </Text>
           </View>
         </View>
 
@@ -48,27 +50,29 @@ function Status({navigation, route}) {
 
       <Card>
         <View style={{flexDirection: 'row'}}>
-          <View style={{ flex: 2}}>
+          <View style={{flex: 2}}>
             <Text style={styles.textDefault}>จุดขึ้น : </Text>
           </View>
 
-          <View style={{ flex: 1}}>
+          <View style={{flex: 1}}>
             <Text style={styles.textDefault}>{data.point_up_select}</Text>
           </View>
         </View>
 
         <View style={{flexDirection: 'row'}}>
-          <View style={{ flex: 2}}>
-             <Text style={styles.textDefault}>จุดลง : </Text>
+          <View style={{flex: 2}}>
+            <Text style={styles.textDefault}>จุดลง : </Text>
           </View>
 
-          <View style={{ flex: 1}}>
+          <View style={{flex: 1}}>
             <Text style={styles.textDefault}>{data.point_down_select}</Text>
           </View>
         </View>
-
-       
-        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
+        <TouchableOpacity
+          onPress={
+            (() => navigation.navigate('Map'),
+            {ticket_id: item.item[1].ticketid})
+          }>
           <View>
             <Text style={styles.textMap}>กดเพื่อดูตำแหน่งรถตู้</Text>
           </View>
@@ -116,19 +120,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  textStatus:{
-    marginTop:15,
+  textStatus: {
+    marginTop: 15,
     color: '#5660B3',
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  textMap:{
-    marginTop:15,
+  textMap: {
+    marginTop: 15,
     color: '#5660B3',
     fontWeight: 'bold',
     fontSize: 20,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });

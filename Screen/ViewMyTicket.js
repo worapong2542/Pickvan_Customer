@@ -123,7 +123,7 @@ function ViewMyTicket({navigation, route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Map')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Map'),{ticket_id:item.ticket_id}}>
           <View>
             <Text style={styles.textMap}>กดเพื่อดูตำแหน่งรถตู้</Text>
           </View>
