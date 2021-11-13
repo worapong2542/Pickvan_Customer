@@ -36,25 +36,19 @@ function ViewMyTicket({navigation, route}) {
         <TouchableOpacity
           onPress={() => navigation.navigate('Payment', {item: item})}>
           <Text style={styles.textStatus}>ยังไม่ชำระเงิน กดเพื่อชำระเงิน</Text>
-        </TouchableOpacity>,
+        </TouchableOpacity>
       );
     } else if (value.status_id == 1) {
       setreview(
-        <TouchableOpacity onPress={() => console.log('')}>
           <Text style={styles.textStatus}>รอตรวจสอบ</Text>
-        </TouchableOpacity>,
       );
     } else if (value.status_id == 2) {
       setreview(
-        <TouchableOpacity onPress={() => console.log('')}>
           <Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>
-        </TouchableOpacity>,
       );
     } else {
       setreview(
-        <TouchableOpacity onPress={() => console.log('')}>
           <Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>
-        </TouchableOpacity>,
       );
     }
   }

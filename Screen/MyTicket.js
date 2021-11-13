@@ -9,6 +9,8 @@ function MyTicket({route, navigation}) {
 
   const [seconds, setSeconds] = useState(0);
 
+  const [text, setText] = useState();
+
   //ดึง ticket ทุก  30 วิ
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,6 +37,18 @@ function MyTicket({route, navigation}) {
     navigation.navigate('ViewMyTicket', {item: item});
   }
 
+  function checkStatus(status) {
+    if(status == 0){
+      return <Text style={styles.textCheck}> ยังไม่ชำระเงิน </Text>
+    }else if(status == 1){
+      return <Text style={styles.textCheck}> รอตรวจสอบ</Text>
+    }else if(status == 2){
+      return <Text style={styles.textCheck}> ชำระเงินแล้ว</Text>
+    }else{
+      return <Text style={styles.textCheck}>ตั๋วของคุณถูกยกเลิก</Text>
+    }
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1, justifyContent: 'center'}}>
@@ -43,10 +57,25 @@ function MyTicket({route, navigation}) {
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => navto_ViewMyticket(item)}>
               <Card>
-                <Text style={styles.textTime}>{item.date.substring(0, 10)}</Text>
+                <Text style={styles.textTime}>
+                  {item.date.substring(0, 10)}
+                </Text>
                 <Text style={styles.textDefault}>{item.name}</Text>
-                <Text style={styles.textDefault}>เวลา : {item.time.substring(0, 5)}</Text>
-                <Text style={styles.textDefault}>จำนวน : {item.seat_amount}</Text>
+                <Text style={styles.textDefault}>
+                  เวลา : {item.time.substring(0, 5)}
+                </Text>
+
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.textDefault}>
+                    จำนวน : {item.seat_amount}
+                  </Text>
+
+                  <TouchableOpacity>
+                    <View style={styles.btnCheck}>
+                    {checkStatus(item.status_id)}
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </Card>
             </TouchableOpacity>
           )}
@@ -65,7 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 10,
   },
- 
+
   textBold: {
     color: '#5660B3',
     fontWeight: 'bold',
@@ -76,5 +105,19 @@ const styles = StyleSheet.create({
     color: '#5660B3',
     fontSize: 16,
     marginBottom: 10,
+  },
+  btnCheck: {
+    backgroundColor: '#FEB5A6',
+    borderRadius: 20,
+    height: 30,
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 150,
+  },
+  textCheck: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

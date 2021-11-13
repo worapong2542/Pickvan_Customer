@@ -5,7 +5,7 @@ import ImgToBase64 from 'react-native-image-base64';
 import axios from 'axios';
 
 function uploadSlip({navigation, route}) {
-  const {item} = route.params;
+  const {item} = route.params; 
   const [photo, setphoto] = useState();
   
   function handlerChoosePhoto () {
@@ -14,9 +14,9 @@ function uploadSlip({navigation, route}) {
     };
 
     launchImageLibrary(options, response => {
-      if (response.didCancel == true) {
+      if (response.didCancel == true) {  //ถ้า cancle ไม่มีไรเกิดขึ้น
       } else {
-        if (response.assets[0].uri) {
+        if (response.assets[0].uri) { //ถ้ามี uri = เลือกรูปแล้ว (res.asset[0] = path รูปที่เลือก)
           setphoto(response);
         }
       }
@@ -45,8 +45,8 @@ function uploadSlip({navigation, route}) {
 
   function check_res(res){
     if(res == "0"){
-      console.log(item)
-      navigation.navigate('Status', {item: item}); // item [id]
+      //console.log(item)
+      navigation.navigate('Status', {item: item});
     }else if(res == "1"){
       alert("เกิดข้อผิดผลาดบางอย่าง")
     }else{

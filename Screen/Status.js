@@ -17,7 +17,7 @@ function Status({navigation, route}) {
     const interval = setInterval(() => {
       getStatus();
       setSeconds(seconds => seconds + 1);
-    }, 30000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -26,7 +26,7 @@ function Status({navigation, route}) {
   }, []);
 
   async function getStatus() {
-    console.log(item.item[1].ticketid);
+    //console.log(item.item[1].ticketid);
     await axios
       .get('http://10.0.2.2:3001/customer/get_Status/' + item.item[1].ticketid)
       .then(res => checkStatus(res.data));
@@ -38,25 +38,19 @@ function Status({navigation, route}) {
         <TouchableOpacity
           onPress={() => navigation.navigate('Payment', {item: item})}>
           <Text style={styles.textStatus}>ยังไม่ชำระเงิน กดเพื่อชำระเงิน</Text>
-        </TouchableOpacity>,
+        </TouchableOpacity>
       );
     } else if (value.status_id == 1) {
       setreview(
-        <TouchableOpacity onPress={() => console.log('')}>
           <Text style={styles.textStatus}>รอตรวจสอบ</Text>
-        </TouchableOpacity>,
       );
     } else if (value.status_id == 2) {
       setreview(
-        <TouchableOpacity onPress={() => console.log('')}>
           <Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>
-        </TouchableOpacity>,
       );
     } else {
       setreview(
-        <TouchableOpacity onPress={() => console.log('')}>
           <Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>
-        </TouchableOpacity>,
       );
     }
   }
