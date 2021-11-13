@@ -7,6 +7,53 @@ function Status({navigation, route}) {
   const {item} = route.params;
   const data = item.item[0];
 
+  const [text, setText] = useState('');
+  const [seconds, setSeconds] = useState(0);
+  let status = 0;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getStatus();
+      setSeconds(seconds => seconds + 1);
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    getStatus();
+  }, []);
+
+  async function getStatus() {
+    await axios
+      .get('http://10.0.2.2:3001/customer/get_Status/' + item.ticket_id)
+      .then(res => checkStatus(res.data));
+  }
+
+  function checkStatus(value) {
+    status = value;
+    if (value == 0) {
+      setText('ยังไม่ชำระเงิน กดเพื่อชำระเงิน');
+    } else if (value == 1) {
+      setText('รอตรวจสอบ');
+    } else if (value == 2) {
+      setText('ชำระเงินเรียบร้อยแล้ว');
+    } else {
+      setText('ตั๋วของคุณถูกยกเลิก');
+    }
+  }
+
+  function checkPaid() {
+    if (status == 0) {
+      navigation.navigate('Payment', {item: item});
+    } else if (status == 1) {
+      setText('รอตรวจสอบ');
+    } else if (status == 2) {
+      setText('ชำระเงินเรียบร้อยแล้ว');
+    } else {
+      setText('ตั๋วของคุณถูกยกเลิก');
+    }
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Card>
@@ -45,7 +92,9 @@ function Status({navigation, route}) {
           </View>
         </View>
 
-        <Text style={styles.textStatus}>กำลังรอตรวจสอบ</Text>
+        <TouchableOpacity onPress={() => checkPaid()}>
+          <Text style={styles.textStatus}>{text}</Text>
+        </TouchableOpacity>
       </Card>
 
       <Card>
