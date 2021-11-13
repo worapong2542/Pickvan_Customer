@@ -6,10 +6,12 @@ import Card from './Card';
 function Status({navigation, route}) {
   const {item} = route.params;
   const data = item.item[0];
-
-  const [text, setText] = useState('');
   const [seconds, setSeconds] = useState(0);
-  let status = 0;
+  const [review, setreview] = useState(
+    <TouchableOpacity onPress={() => console.log('')}>
+      <Text style={styles.textStatus}>กรุณารอสักครู่</Text>
+    </TouchableOpacity>,
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,27 +32,31 @@ function Status({navigation, route}) {
   }
 
   function checkStatus(value) {
-    status = value;
-    if (value == 0) {
-      setText('ยังไม่ชำระเงิน กดเพื่อชำระเงิน');
-    } else if (value == 1) {
-      setText('รอตรวจสอบ');
-    } else if (value == 2) {
-      setText('ชำระเงินเรียบร้อยแล้ว');
+    if (value.status_id == 0) {
+      setreview(
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Payment', {item: item})}>
+          <Text style={styles.textStatus}>ยังไม่ชำระเงิน กดเพื่อชำระเงิน</Text>
+        </TouchableOpacity>,
+      );
+    } else if (value.status_id == 1) {
+      setreview(
+        <TouchableOpacity onPress={() => console.log('')}>
+          <Text style={styles.textStatus}>รอตรวจสอบ</Text>
+        </TouchableOpacity>,
+      );
+    } else if (value.status_id == 2) {
+      setreview(
+        <TouchableOpacity onPress={() => console.log('')}>
+          <Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>
+        </TouchableOpacity>,
+      );
     } else {
-      setText('ตั๋วของคุณถูกยกเลิก');
-    }
-  }
-
-  function checkPaid() {
-    if (status == 0) {
-      navigation.navigate('Payment', {item: item});
-    } else if (status == 1) {
-      setText('รอตรวจสอบ');
-    } else if (status == 2) {
-      setText('ชำระเงินเรียบร้อยแล้ว');
-    } else {
-      setText('ตั๋วของคุณถูกยกเลิก');
+      setreview(
+        <TouchableOpacity onPress={() => console.log('')}>
+          <Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>
+        </TouchableOpacity>,
+      );
     }
   }
 
@@ -92,9 +98,8 @@ function Status({navigation, route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => checkPaid()}>
-          <Text style={styles.textStatus}>{text}</Text>
-        </TouchableOpacity>
+        <View>{review}</View>
+
       </Card>
 
       <Card>
