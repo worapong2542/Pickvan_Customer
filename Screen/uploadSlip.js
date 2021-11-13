@@ -45,6 +45,7 @@ function uploadSlip({navigation, route}) {
 
   function check_res(res){
     if(res == "0"){
+      console.log(item)
       navigation.navigate('Status', {item: item}); // item [id]
     }else if(res == "1"){
       alert("เกิดข้อผิดผลาดบางอย่าง")

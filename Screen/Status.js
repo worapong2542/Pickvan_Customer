@@ -26,9 +26,10 @@ function Status({navigation, route}) {
   }, []);
 
   async function getStatus() {
+    console.log(item.item[1].ticketid)
     await axios
-      .get('http://10.0.2.2:3001/customer/get_Status/' + item.ticket_id)
-      .then(res => (res.data));
+      .get('http://10.0.2.2:3001/customer/get_Status/' + item.item[1].ticketid)
+      .then(res => checkStatus(res.data));
   }
 
   function checkStatus(value) {
@@ -99,7 +100,6 @@ function Status({navigation, route}) {
         </View>
 
         <View>{review}</View>
-
       </Card>
 
       <Card>
