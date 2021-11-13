@@ -28,12 +28,12 @@ function ViewMyTicket({navigation, route}) {
   }
 
   function checkStatus(value) {
-    status = value
-    if (value == 0) {
+    status = value.status_id
+    if (status == 0) {
       setText('ยังไม่ชำระเงิน กดเพื่อชำระเงิน');
-    } else if (value == 1) {
+    } else if (status == 1) {
       setText('รอตรวจสอบ');
-    } else if (value == 2) {
+    } else if (status == 2) {
       setText('ชำระเงินเรียบร้อยแล้ว');
     } else {
       setText('ตั๋วของคุณถูกยกเลิก');
@@ -117,7 +117,7 @@ function ViewMyTicket({navigation, route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Map'),{ticket_id:item.ticket_id}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Map',{ticket_id:item.ticket_id})}>
           <View>
             <Text style={styles.textMap}>กดเพื่อดูตำแหน่งรถตู้</Text>
           </View>
