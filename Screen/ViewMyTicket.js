@@ -5,20 +5,23 @@ import Card from './Card';
 
 function ViewMyTicket({navigation, route}) {
   const {item} = route.params;
-  const [text, setText] = useState('');
   const [seconds, setSeconds] = useState(0);
-  let status = 0
+  const [review, setreview] = useState(
+    <TouchableOpacity onPress={() => console.log('')}>
+      <Text style={styles.textStatus}>กรุณารอสักครู่</Text>
+    </TouchableOpacity>,
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      getStatus()
+      getStatus();
       setSeconds(seconds => seconds + 1);
     }, 30000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    getStatus()
+    getStatus();
   }, []);
 
   async function getStatus() {
@@ -28,30 +31,33 @@ function ViewMyTicket({navigation, route}) {
   }
 
   function checkStatus(value) {
-    status = value.status_id
-    if (status == 0) {
-      setText('ยังไม่ชำระเงิน กดเพื่อชำระเงิน');
-    } else if (status == 1) {
-      setText('รอตรวจสอบ');
-    } else if (status == 2) {
-      setText('ชำระเงินเรียบร้อยแล้ว');
+    if (value.status_id == 0) {
+      setreview(
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Payment', {item: item})}>
+          <Text style={styles.textStatus}>ยังไม่ชำระเงิน กดเพื่อชำระเงิน</Text>
+        </TouchableOpacity>,
+      );
+    } else if (value.status_id == 1) {
+      setreview(
+        <TouchableOpacity onPress={() => console.log('')}>
+          <Text style={styles.textStatus}>รอตรวจสอบ</Text>
+        </TouchableOpacity>,
+      );
+    } else if (value.status_id == 2) {
+      setreview(
+        <TouchableOpacity onPress={() => console.log('')}>
+          <Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>
+        </TouchableOpacity>,
+      );
     } else {
-      setText('ตั๋วของคุณถูกยกเลิก');
+      setreview(
+        <TouchableOpacity onPress={() => console.log('')}>
+          <Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>
+        </TouchableOpacity>,
+      );
     }
   }
-
-  function checkPaid(){
-    if (status == 0) {
-        navigation.navigate('Payment',{item:item})
-      } else if (status == 1) {
-        setText('รอตรวจสอบ');
-      } else if (status == 2) {
-        setText('ชำระเงินเรียบร้อยแล้ว');
-      } else {
-        setText('ตั๋วของคุณถูกยกเลิก');
-      }
-    }
-  
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -91,9 +97,7 @@ function ViewMyTicket({navigation, route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => checkPaid()}>
-        <Text style={styles.textStatus}>{text}</Text>
-        </TouchableOpacity>
+        <View>{review}</View>
       </Card>
 
       <Card>
@@ -117,7 +121,10 @@ function ViewMyTicket({navigation, route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Map',{ticket_id:item.ticket_id})}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Map', {ticket_id: item.ticket_id})
+          }>
           <View>
             <Text style={styles.textMap}>กดเพื่อดูตำแหน่งรถตู้</Text>
           </View>
