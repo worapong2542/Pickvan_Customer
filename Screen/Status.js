@@ -26,7 +26,7 @@ function Status({navigation, route}) {
   }, []);
 
   async function getStatus() {
-    console.log(item.item[1].ticketid)
+    console.log(item.item[1].ticketid);
     await axios
       .get('http://10.0.2.2:3001/customer/get_Status/' + item.item[1].ticketid)
       .then(res => checkStatus(res.data));
@@ -123,9 +123,7 @@ function Status({navigation, route}) {
           </View>
         </View>
         <TouchableOpacity
-          onPress={
-            (() => navigation.navigate('Map'),
-            {ticket_id: item.item[1].ticketid})
+          onPress={(() => navigation.navigate('Map',{ticket_id: item.item[1].ticketid}))
           }>
           <View>
             <Text style={styles.textMap}>กดเพื่อดูตำแหน่งรถตู้</Text>
