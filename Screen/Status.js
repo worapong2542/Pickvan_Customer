@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 import React, {useState, useEffect, useRef} from 'react';
 import Card from './Card';
@@ -28,7 +28,7 @@ function Status({navigation, route}) {
   async function getStatus() {
     await axios
       .get('http://10.0.2.2:3001/customer/get_Status/' + item.ticket_id)
-      .then(res => checkStatus(res.data));
+      .then(res => (res.data));
   }
 
   function checkStatus(value) {
