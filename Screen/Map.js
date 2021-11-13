@@ -1,14 +1,15 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View,Alert} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {map} from 'traverse';
 import mapMarker from '../style/mapMarker';
 import GetLocation from 'react-native-get-location';
 import LocationEnabler from 'react-native-location-enabler';
+import axios from 'axios';
 
 function Map({navigation, route}) {
-  const {item} = route.params;
+  const {ticket_id} = route.params;
   const [state, setState] = useState({
     pickupCords: {
       latitude: 13.64788,
@@ -45,11 +46,11 @@ function Map({navigation, route}) {
     const interval = setInterval(() => {
       get_location();
       setSeconds(seconds => seconds + 1);
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  function get_location() {
+  async function get_location() {
     await GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
     })
@@ -57,6 +58,7 @@ function Map({navigation, route}) {
         set_location(location);
       })
       .catch(error => {
+        console.log(error)
         Alert.alert('เกิดข้อผิดผลาด', 'กดปุ่ม OK เพื่อเปิด GPS ใหม่อีกครั้ง', [
           {
             text: 'Cancel',
@@ -71,7 +73,7 @@ function Map({navigation, route}) {
   async function set_location(location) {
     await axios
       .get(
-        'http://10.0.2.2:3001/customer/get_driver_location/' + item.ticket_id,
+        'http://10.0.2.2:3001/customer/get_driver_location/' + ticket_id,
       )
       .then(res =>
         setState({
@@ -82,8 +84,8 @@ function Map({navigation, route}) {
             longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
           },
           droplocationCords: {
-            latitude: res.location_detail.latitude,
-            longitude: res.location_detail.longitude,
+            latitude: res.data.location_detail.latitude,
+            longitude: res.data.location_detail.longitude,
             latitudeDelta: 0.03,
             longitudeDelta: 0.005,
           },
