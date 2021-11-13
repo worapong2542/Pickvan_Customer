@@ -40,14 +40,18 @@ function Viewroutebus({route, navigation}) {
 
   //push data to routedetail
   function navto_uploadpage(item_select) {
-    let data = [];
-    data.push({
-      vandata: item_select,
-      point_down_select: item[0].point_down_select,
-      point_up_select: item[0].point_up_select,
-      seat_select: item[0].seat,
-    });
-    navigation.navigate('Routedetail', {item: data});
+    if (item[0].seat > item_select.seat_all - item_select.seat_onbuy) {
+      alert('ที่นี่งที่คุณจะซื้อเกินจำนวนที่เหลืออยู่');
+    } else {
+      let data = [];
+      data.push({
+        vandata: item_select,
+        point_down_select: item[0].point_down_select,
+        point_up_select: item[0].point_up_select,
+        seat_select: item[0].seat,
+      });
+      navigation.navigate('Routedetail', {item: data});
+    }
   }
 
   //api
@@ -73,25 +77,23 @@ function Viewroutebus({route, navigation}) {
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{flexDirection: 'row', marginLeft: 10}}>
+          <TouchableOpacity
+            style={test.colorId === 0 ? styles.red : styles.button}
+            onPress={() => testChange(0, 0)}>
+            <Text style={styles.textDate}>{date_format[0]}</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-               style={test.colorId === 0 ? styles.red : styles.button}
-               onPress={() => testChange(0, 0)}>
-              <Text style={styles.textDate}>{date_format[0]}</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={test.colorId === 2 ? styles.red : styles.button}
+            onPress={() => testChange(2, 1)}>
+            <Text style={styles.textDate}>{date_format[1]}</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-               style={test.colorId === 2 ? styles.red : styles.button}
-               onPress={() => testChange(2, 1)}>
-              <Text style={styles.textDate}>{date_format[1]}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={test.colorId === 3 ? styles.red : styles.button}
-              onPress={() => testChange(3, 2)}>
-              <Text style={styles.textDate}>{date_format[2]}</Text>
-            </TouchableOpacity>
-
+          <TouchableOpacity
+            style={test.colorId === 3 ? styles.red : styles.button}
+            onPress={() => testChange(3, 2)}>
+            <Text style={styles.textDate}>{date_format[2]}</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList
