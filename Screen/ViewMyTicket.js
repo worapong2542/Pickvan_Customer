@@ -16,7 +16,7 @@ function ViewMyTicket({navigation, route}) {
     const interval = setInterval(() => {
       getStatus();
       setSeconds(seconds => seconds + 1);
-    }, 30000);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 

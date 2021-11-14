@@ -54,7 +54,7 @@ function Payment({navigation, route}) {
 
   function check_res(res) {
     if (res == '0') {
-      navigation.navigate('Status', {item: item});
+      navigation.navigate('ViewMyTicket', {item: item});
     } else if (res == '1') {
       alert('เกิดข้อผิดผลาดบางอย่าง');
     } else {
