@@ -34,7 +34,7 @@ function Routedetail({ navigation, route }) {
       alert('Some thing Worng');
     } else {
       alert('จองเรียบร้อย');
-      item.push({ticketid:res.data}) //push ticketid เลขตั๋วไปใช้หน้าต่อไป
+      item.push({ticketid:res.data}) //push ticketid เข้าใน item เพื่อเอาเลขตั๋วไปใช้หน้าต่อไป
       navigation.navigate('ConfirmTicket', { item: { item } }) //ส่ง item รายละเอียดหน้ารี้ไป
     }
   }
@@ -43,7 +43,7 @@ function Routedetail({ navigation, route }) {
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={{ flex: 2}}>
         <Card>
-          <Text style={styles.textTime}>{item[0].vandata.time.substring(0, 5)}</Text>
+          <Text style={styles.textTime}>{item[0].vandata.time.substring(0, 5)}</Text> 
           <View style={{flexDirection: 'row'}}>
             <View style={{ flex: 2}}>
               <Text style={styles.textDefault}>{item[0].vandata.name}</Text>
