@@ -16,7 +16,7 @@ function uploadSlip({navigation, route}) {
     launchImageLibrary(options, response => {
       if (response.didCancel == true) {  //ถ้า cancle ไม่มีไรเกิดขึ้น
       } else {
-        if (response.assets[0].uri) { //ถ้ามี uri = เลือกรูปแล้ว (res.asset[0] = path รูปที่เลือก)
+        if (response.assets[0].uri) {  //ถ้ามี uri = เลือกรูปแล้ว (res.asset[0] = path รูปที่เลือก)
           setphoto(response);
         }
       }
@@ -28,7 +28,7 @@ function uploadSlip({navigation, route}) {
       alert('กรุณาอัพโหลดสลิป');
     } else {
       ImgToBase64.getBase64String(photo.assets[0].uri)
-        .then(base64String => uploadImage(base64String))
+        .then(base64String => uploadImage(base64String))  //uploadImage(data)
         .catch(err => alert(err));
     }
   }
@@ -66,8 +66,8 @@ function uploadSlip({navigation, route}) {
       )}
       <TouchableOpacity onPress={()=>handlerChoosePhoto()} >
         <View style={styles.btnupload}>
-          <Text style={{color: 'gray', fontWeight: 'bold', fontSize: 18}}>
-            อัพโหลดสลิป
+          <Text style={{color: 'gray', fontWeight: 'bold', fontSize: 17}}>
+            กดเพื่ออัพโหลดสลิป
           </Text>
         </View>
       </TouchableOpacity>

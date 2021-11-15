@@ -19,6 +19,7 @@ import {DrawerContent} from './Screen/DrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ViewMyTicket from './Screen/ViewMyTicket';
 import Payment from './Screen/Payment';
+import contact from './Screen/contact'
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -182,6 +183,20 @@ function Pickvan({navigation}) {
         }}
       />
       <Stack.Screen name="Payment" component={Payment} />
+
+      <Stack.Screen
+        name="contact"
+        component={contact}
+        options={{
+          title: 'ช่องทางการติดต่อ',
+          headerTitleAlign: 'center',
+          headerTintColor: '#5660B3',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }

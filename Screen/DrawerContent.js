@@ -3,12 +3,11 @@ import {View, Text, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Drawer} from 'react-native-paper';
-import {DrawerContentScrollView,  DrawerItem} from '@react-navigation/drawer';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState, useEffect} from 'react';
 
 export function DrawerContent({props, navigation}) {
-  
   async function del() {
     await AsyncStorage.removeItem('@datalogin');
     await AsyncStorage.removeItem('@dataloginId');
@@ -16,16 +15,16 @@ export function DrawerContent({props, navigation}) {
     navigation.navigate('Login');
   }
 
-  const [userName, setuserName] = useState('')
+  const [userName, setuserName] = useState('');
 
   //ทำงานเมื่อหน้าถูกเรียกใช้
   useEffect(() => {
     getUserName();
   }, []); //[] ทำงานรอบเดียว
 
-  async function getUserName() { 
+  async function getUserName() {
     const tempName = await AsyncStorage.getItem('@dataloginName');
-    setuserName(tempName)
+    setuserName(tempName);
     console.log(tempName);
   }
 
@@ -43,8 +42,12 @@ export function DrawerContent({props, navigation}) {
             label="ตั๋วของฉัน"
             onPress={() => navigation.navigate('MyTicket')}
           />
-        </View>
 
+          <DrawerItem
+            label="ช่องทางการติดต่อ"
+            onPress={() => navigation.navigate('contact')}
+          />
+        </View>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem label="ออกจากระบบ" onPress={() => del()} />
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
     borderColor: '#f4f4f4',
     borderTopWidth: 1,
   },
-  drawerMenu:{
+  drawerMenu: {
     paddingTop: 20,
     paddingLeft: 5,
   },
