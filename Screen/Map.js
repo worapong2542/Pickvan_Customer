@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {StyleSheet, Text, View,Alert} from 'react-native';
+import {StyleSheet, Text, View, Alert} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {map} from 'traverse';
@@ -13,7 +13,7 @@ function Map({navigation, route}) {
   const [state, setState] = useState({
     pickupCords: {
       latitude: 13.77839841319077,
-      longitude:  100.55987628382091,
+      longitude: 100.55987628382091,
       latitudeDelta: 0.03, //รัศมีจากตำแหน่ง lattitude
       longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
     },
@@ -26,7 +26,7 @@ function Map({navigation, route}) {
     isFocused: false,
     fixedOnUUID: '',
   });
-
+  let i = 0;
 
   const {
     PRIORITIES: {HIGH_ACCURACY},
@@ -58,7 +58,7 @@ function Map({navigation, route}) {
         set_location(location);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
         Alert.alert('เกิดข้อผิดผลาด', 'กดปุ่ม OK เพื่อเปิด GPS ใหม่อีกครั้ง', [
           {
             text: 'Cancel',
@@ -71,27 +71,36 @@ function Map({navigation, route}) {
   }
 
   async function set_location(location) {
-    console.log(location)
     await axios
-      .get(
-        'http://10.0.2.2:3001/customer/get_driver_location/' + ticket_id,
-      )
-      .then(res =>
-        setState({
-          pickupCords: {
-            latitude: location.latitude,
-            longitude: location.longitude,
-            latitudeDelta: 0.03, //รัศมีจากตำแหน่ง lattitude
-            longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
-          },
-          droplocationCords: {
-            latitude: parseFloat(res.data.location_detail.latitude),
-            longitude: parseFloat(res.data.location_detail.longitude),
-            latitudeDelta: 0.03,
-            longitudeDelta: 0.005,
-          },
-        }),
-      );
+      .get('http://10.0.2.2:3001/customer/demo_gps/' + i)
+      .then(res => check_location_status(location, res));
+    //.get('http://10.0.2.2:3001/customer/get_driver_location/' + ticket_id)
+  }
+
+  function check_location_status(location, res) {
+    i++
+    if(i>6){
+      i=0
+    }
+    if (res.data.location_status == 0) {
+      alert('ไม่สามารถเข้าถึงGPSของคนขับได้');
+      navigation.push('Home');
+    } else {
+      setState({
+        pickupCords: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.03, //รัศมีจากตำแหน่ง lattitude
+          longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
+        },
+        droplocationCords: {
+          latitude: parseFloat(res.data.location_detail.latitude),
+          longitude: parseFloat(res.data.location_detail.longitude),
+          latitudeDelta: 0.03,
+          longitudeDelta: 0.005,
+        },
+      });
+    }
   }
   //13.286999423678475, 100.93491412305957
 
@@ -105,8 +114,8 @@ function Map({navigation, route}) {
         ref={mapRef}
         style={StyleSheet.absoluteFill}
         initialRegion={pickupCords}>
-        <Marker coordinate={pickupCords} image={mapMarker.isCurLoc} />
-        <Marker coordinate={droplocationCords} image={mapMarker.isDesLoc} />
+        <Marker coordinate={pickupCords} image={mapMarker.isDesLoc} />
+        <Marker coordinate={droplocationCords} image={mapMarker.isCurLoc} />
 
         <MapViewDirections
           origin={pickupCords}

@@ -12,6 +12,7 @@ function Status({navigation, route}) {
       <Text style={styles.textStatus}>กรุณารอสักครู่</Text>
     </TouchableOpacity>,
   );
+  const [permisstion_value, setpermisstion_value] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,25 +34,32 @@ function Status({navigation, route}) {
   }
 
   function checkStatus(value) {
+    setpermisstion_value(value.status_id)
     if (value.status_id == 0) {
       setreview(
         <TouchableOpacity
           onPress={() => navigation.navigate('Payment', {item: item})}>
           <Text style={styles.textStatus}>ยังไม่ชำระเงิน กดเพื่อชำระเงิน</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>,
       );
     } else if (value.status_id == 1) {
-      setreview(
-          <Text style={styles.textStatus}>รอตรวจสอบ</Text>
-      );
+      setreview(<Text style={styles.textStatus}>รอตรวจสอบ</Text>);
     } else if (value.status_id == 2) {
-      setreview(
-          <Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>
-      );
+      setreview(<Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>);
     } else {
-      setreview(
-          <Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>
-      );
+      setreview(<Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>);
+    }
+  }
+
+  function check_permission() {
+    if (permisstion_value == 0) {
+      alert('กรุณาชำระเงิน');
+    } else if (permisstion_value == 1) {
+      alert('กำลังตรวจสอบการชำระเงิน');
+    } else if (permisstion_value == 3) {
+      alert('ตั๋วของคุณถูกยกเลิก');
+    } else {
+      navigation.navigate('Map', {ticket_id: item.item[1].ticketid});
     }
   }
 
@@ -116,9 +124,7 @@ function Status({navigation, route}) {
             <Text style={styles.textDefault}>{data.point_down_select}</Text>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={(() => navigation.navigate('Map',{ticket_id: item.item[1].ticketid}))
-          }>
+        <TouchableOpacity onPress={() => check_permission()}>
           <View>
             <Text style={styles.textMap}>กดเพื่อดูตำแหน่งรถตู้</Text>
           </View>
