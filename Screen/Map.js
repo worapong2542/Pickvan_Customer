@@ -12,21 +12,21 @@ function Map({navigation, route}) {
   const {ticket_id} = route.params;
   const [state, setState] = useState({
     pickupCords: {
-      latitude: 13.64788,
-      longitude: 100.679709,
+      latitude: 13.77839841319077,
+      longitude:  100.55987628382091,
       latitudeDelta: 0.03, //รัศมีจากตำแหน่ง lattitude
       longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
     },
     droplocationCords: {
-      latitude: 13.285909416869071,
-      longitude: 100.92419757312429,
+      latitude: 13.645132912893455,
+      longitude: 100.68987324050981,
       latitudeDelta: 0.03,
       longitudeDelta: 0.005,
     },
     isFocused: false,
     fixedOnUUID: '',
   });
-  //13.285909416869071, 100.92419757312429
+
 
   const {
     PRIORITIES: {HIGH_ACCURACY},
@@ -71,6 +71,7 @@ function Map({navigation, route}) {
   }
 
   async function set_location(location) {
+    console.log(location)
     await axios
       .get(
         'http://10.0.2.2:3001/customer/get_driver_location/' + ticket_id,
@@ -84,8 +85,8 @@ function Map({navigation, route}) {
             longitudeDelta: 0.005, //รัศมีจากตำแหน่ง lontitude
           },
           droplocationCords: {
-            latitude: res.data.location_detail.latitude,
-            longitude: res.data.location_detail.longitude,
+            latitude: parseFloat(res.data.location_detail.latitude),
+            longitude: parseFloat(res.data.location_detail.longitude),
             latitudeDelta: 0.03,
             longitudeDelta: 0.005,
           },

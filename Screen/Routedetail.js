@@ -19,7 +19,7 @@ function Routedetail({ navigation, route }) {
   }
 
   async function sentbuyticket() {
-    await axios.post('http://10.0.2.2:3001/customer/buyticket', {
+    await axios.post('http://10.0.2.2:3001/buy/buyticket', {
         user_id: userId,
         point_up: item[0].point_up_select,
         point_down: item[0].point_down_select,

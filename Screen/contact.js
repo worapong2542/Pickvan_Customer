@@ -33,7 +33,7 @@ function contact() {
           />
           <View>
             <Text style={styles.textBold}>อีเมล์</Text>
-            <Text style={styles.textDefault}>081-234-5678</Text>
+            <Text style={styles.textDefault}>van_bangna@gmail.com</Text>
           </View>
         </View>
       </View>

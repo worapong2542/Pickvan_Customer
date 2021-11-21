@@ -5,7 +5,7 @@ import Card from './Card';
 import CardDate from './cardDate';
 
 function Viewroutebus({route, navigation}) {
-  const [dataschedule, setdataschedule] = useState([]);
+  const [dataschedule, setdataschedule] = useState();
   const [select_date, set_select_date] = useState(0);
   const date_format = [];
 
@@ -39,7 +39,7 @@ function Viewroutebus({route, navigation}) {
   }
 
   //push data to routedetail
-  function navto_uploadpage(item_select) {
+  function navto_Routedetail(item_select) {
     if (item[0].seat > item_select.seat_all - item_select.seat_onbuy) {
       alert('ที่นี่งที่คุณจะซื้อเกินจำนวนที่เหลืออยู่');
     } else {
@@ -63,7 +63,24 @@ function Viewroutebus({route, navigation}) {
           '/' +
           item[0].routs,
       )
-      .then(res => setdataschedule(res.data));
+      .then(res => check_time_current(res, x));
+  }
+  function check_time_current(res, x) {
+    if (x == 0) {
+      let today = new Date();
+      let splice_value = 0
+      for (let i = 0; i < res.data.length; i++) {
+        if (parseInt(res.data[i].time.substring(0,2)+""+res.data[i].time.substring(3,5)) < parseInt(today.getHours()+""+today.getMinutes())) {
+          splice_value++
+        } else {
+          break;
+        }
+      }
+      res.data.splice(0, splice_value);
+      setdataschedule(res.data);
+    } else {
+      setdataschedule(res.data);
+    }
   }
 
   const [test, settest] = useState({colorId: 0});
@@ -99,7 +116,7 @@ function Viewroutebus({route, navigation}) {
         <FlatList
           data={reviews}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navto_uploadpage(item)}>
+            <TouchableOpacity onPress={() => navto_Routedetail(item)}>
               <Card>
                 <Text style={styles.textBold}>{item.time.substring(0, 5)}</Text>
 
@@ -114,7 +131,7 @@ function Viewroutebus({route, navigation}) {
                     ที่
                   </Text>
 
-                  <TouchableOpacity onPress={() => navto_uploadpage(item)}>
+                  <TouchableOpacity onPress={() => navto_Routedetail(item)}>
                     <View style={styles.btnCheck}>
                       <Text style={styles.textCheck}>จอง</Text>
                     </View>
