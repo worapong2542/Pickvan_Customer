@@ -45,7 +45,7 @@ function Routedetail({navigation, route}) {
 
   function call_back(res) {
     if (res.data == '1') {
-      alert('Some thing Worng');
+      alert('Some thing Wrong');
     } else {
       alert('จองเรียบร้อย');
       item.push({ticketid: res.data}); //push ticketid เข้าใน item เพื่อเอาเลขตั๋วไปใช้หน้าต่อไป
@@ -121,7 +121,6 @@ function Routedetail({navigation, route}) {
       </View>
 
       <View style={{flex: 1}}>
-        {/* <TouchableOpacity onPress={() => sentbuyticket()}> */}
         <TouchableOpacity onPress={() => sentbuyticket()}>
           <View style={styles.btnConfirm}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>

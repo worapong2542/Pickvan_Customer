@@ -7,7 +7,7 @@ function Status({navigation, route}) {
   const {item} = route.params;
   const data = item.item[0];
   const [seconds, setSeconds] = useState(0);
-  const [review, setreview] = useState(
+  const [status, setstatus] = useState(
     <TouchableOpacity onPress={() => console.log('')}>
       <Text style={styles.textStatus}>กรุณารอสักครู่</Text>
     </TouchableOpacity>,
@@ -36,18 +36,18 @@ function Status({navigation, route}) {
   function checkStatus(value) {
     setpermisstion_value(value.status_id)
     if (value.status_id == 0) {
-      setreview(
+      setstatus(
         <TouchableOpacity
           onPress={() => navigation.navigate('Payment', {item: item})}>
           <Text style={styles.textStatus}>ยังไม่ชำระเงิน กดเพื่อชำระเงิน</Text>
         </TouchableOpacity>,
       );
     } else if (value.status_id == 1) {
-      setreview(<Text style={styles.textStatus}>รอตรวจสอบ</Text>);
+      setstatus(<Text style={styles.textStatus}>รอตรวจสอบ</Text>);
     } else if (value.status_id == 2) {
-      setreview(<Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>);
+      setstatus(<Text style={styles.textStatus}>ชำระเงินเรียบร้อยแล้ว</Text>);
     } else {
-      setreview(<Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>);
+      setstatus(<Text style={styles.textStatus}>ตั๋วของคุณถูกยกเลิก</Text>);
     }
   }
 
@@ -101,7 +101,7 @@ function Status({navigation, route}) {
           </View>
         </View>
 
-        <View>{review}</View>
+        <View>{status}</View>
       </Card>
 
       <Card>
